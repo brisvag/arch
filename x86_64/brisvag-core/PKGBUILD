@@ -1,0 +1,7 @@
+pkgname='brisvag-core'
+pkgver=1
+pkgrel=${pkgver}
+pkgdesc='custom core packages and utilities'
+arch=('x86_64')
+license=('GPL3+')
+url='https://github.com/brisvag/arch'
