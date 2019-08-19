@@ -1,4 +1,6 @@
-backup_files() {
+post_install() {
+  (
+  cd "${rootdir}"/dotfiles
   files=($(find ${pkgdir} -type f))
   (
   cd ${HOME}
@@ -6,6 +8,8 @@ backup_files() {
     if [[ -f ${file} ]]; then
       mv ${file} ${file}.pacbak
     fi
+    ln -s "dotfiles/${file}" "${file}"
   done
+  )
   )
 }
