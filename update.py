@@ -8,14 +8,14 @@ repo_name = 'brisvag'
 repo_dir = Path(__file__).parent / 'repo'
 
 
-def build_packages():
+def build_db():
     for dir in repo_dir.iterdir():
         if dir.is_dir():
             subprocess.run(['makepkg', '-fc'], cwd=dir)
+            subprocess.run(f'repo-add {repo_name}.db.tar.xz ./{dir.stem}/*.tar.xz', cwd=repo_dir, shell=True)
 
 
-def make_db():
-    subprocess.run(f'repo-add {repo_name}.db.tar.xz ./*/*.tar.xz', cwd=repo_dir, shell=True)
+def fix_db():
     # replace symlinks with the real files
     db_dest = repo_dir / f'{repo_name}.db'
     files_dest = repo_dir / f'{repo_name}.files'
@@ -26,5 +26,5 @@ def make_db():
 
 
 if __name__ == '__main__':
-    build_packages()
-    make_db()
+    build_db()
+    fix_db()
