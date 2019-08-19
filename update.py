@@ -31,5 +31,6 @@ def fix_db():
 
 
 if __name__ == '__main__':
+    subprocess.run(f'rm -rf ./repo/{repo_name}*', cwd=Path(__file__).parent, shell=True)
     build_db()
     fix_db()
