@@ -34,7 +34,9 @@ package() {
   # package dotfiles
   local home=$(eval echo "${home}")
   mkdir -p "${home}"
-  cp -a "${rootdir}"/HOME "${home}"
+  shopt -s nullglob
+  shopt -s dotglob
+  cp -a "${rootdir}"/HOME/* "${home}"
 
   return 0
 }
