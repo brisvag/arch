@@ -12,10 +12,13 @@ def build_db():
     for dir in repo_dir.iterdir():
         if dir.is_dir():
             subprocess.run(['makepkg', '-fc'], cwd=dir)
-            subprocess.run(f'repo-add {repo_name}.db.tar.xz ./{dir.stem}/*.tar.xz', cwd=repo_dir, shell=True)
+            subprocess.run(f'mv *.tar.xz ../', cwd=dir, shell=True)
 
 
 def fix_db():
+    for tar in repo_dir.iterdir():
+        if tar.match('*.tar.xz'):
+            subprocess.run(f'repo-add {repo_name}.db.tar.xz {tar.name}', cwd=repo_dir, shell=True)
     # replace symlinks with the real files
     db_dest = repo_dir / f'{repo_name}.db'
     files_dest = repo_dir / f'{repo_name}.files'
