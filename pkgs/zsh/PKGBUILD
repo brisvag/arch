@@ -1,6 +1,4 @@
 name='zsh'
-pkgver=1
-pkgrel=${pkgver}
 pkgdesc='everything zsh related'
 
 source ../common.sh

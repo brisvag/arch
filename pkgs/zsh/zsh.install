@@ -1,0 +1,5 @@
+source ../common_install.sh
+
+pre_install() {
+  backup_files
+}
