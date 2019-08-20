@@ -18,20 +18,16 @@ pkgver=$(version)
 pkgrel=1
 
 # use X.txt and X.install (if they exist) for deps an hooks
-deps_and_hooks() {
-  if [[ -f "${name}.txt" ]]; then
-    # grep to ignore comments
-    depends=($(grep -v "^#" "${name}.txt"))
-  fi
+if [[ -f "${name}.txt" ]]; then
+  # grep to ignore comments
+  depends=($(grep -v "^#" "${name}.txt"))
+fi
 
-  if [[ -f "${name}.install" ]]; then
-    install="${name}.install"
-  fi
-}
+if [[ -f "${name}.install" ]]; then
+  install="${name}.install"
+fi
 
 package() {
-  # deps added here are runtime-only
-  deps_and_hooks
   # package dotfiles
   if [[ -d "${rootdir}"/dotfiles ]]; then
     local home=$(eval echo "${home}")

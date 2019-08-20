@@ -1,5 +1,4 @@
 post_install() {
-  chmod -R 755 "/etc/pacman.d/hooks/"
   chmod -R 755 "/etc/pacman.d/hooks.bin/"
 }
 
