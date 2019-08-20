@@ -16,10 +16,8 @@ IFS=$'\n\t'
 echo "This script will erase your drive and kill your family."
 echo "Are you sure you want to continue? (yes/no)"
 read sure
-if [[ "${sure}" == "yes" ]]; then
-  true;
-else
-  exit 1;
+if [[ "${sure}" != "yes" ]]; then
+  exit 1
 fi
 
 #####################################################
