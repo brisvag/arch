@@ -17,9 +17,9 @@ echo "This script will erase your drive and kill your family."
 echo "Are you sure you want to continue? (yes/no)"
 read sure
 if [[ "${sure}" == "yes" ]]; then
-  true
+  true;
 else
-  exit 1
+  exit 1;
 fi
 
 #####################################################
