@@ -1,0 +1,6 @@
+name='hooks'
+pkgdesc='utility hooks for pacman and other stuff'
+
+source ../common.sh
+
+# this one is a special one, need to write down things manually!

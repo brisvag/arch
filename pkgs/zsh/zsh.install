@@ -1,3 +1,0 @@
-source ../common_install.sh
-
-pre_install() {echo test}

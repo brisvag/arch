@@ -10,3 +10,5 @@ Add the following to `/etc/pacman.conf`
 SigLevel = Optional TrustAll
 Server = https://raw.githubusercontent.com/brisvag/arch/master/repo
 ```
+
+Also need post-transaction hook for dotfiles update in `/etc/pacman.d/hooks/`
