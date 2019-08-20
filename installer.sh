@@ -14,8 +14,10 @@ IFS=$'\n\t'
 
 # idiot-proof stop-step
 echo "This script will erase your drive and kill your family."
-echo "Are you sure you want to continue? (yes/no)"
-read sure
+sure=$(dialog --stdout --inputbox "Are you sure you want to continue? (yes/no)" 0 0) || exit 1
+clear
+: ${sure:?"sure cannot be empty"}
+
 if [[ "${sure}" != "yes" ]]; then
   exit 1
 fi
