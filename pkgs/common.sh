@@ -11,6 +11,13 @@ pkgrel=${pkgver}
 home="\${pkgdir}${HOME}"
 rootdir=${PWD}
 
+#files=($(find ./dotfiles -type f))
+#
+#for file in ${files}; do
+#  source+=(${file})
+#  sha256sums+=('SKIP')
+#done
+
 # use X.txt and X.install (if they exist) for deps an hooks
 if [[ -f "${name}.txt" ]]; then
   # grep to ignore comments
