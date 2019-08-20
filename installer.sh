@@ -3,6 +3,8 @@
 # Installer script for arch-linux
 # Based on mdaffin's script at https://github.com/mdaffin/arch-pkgs
 
+# run with: curl -sL https://git.io/brisvag-arch | bash
+
 # raise error on undefined variables and properly handle errorcodes in pipes
 set -uo pipefail
 # trap errors and tell some more info about it; then exit
