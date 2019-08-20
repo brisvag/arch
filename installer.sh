@@ -15,6 +15,11 @@ IFS=$'\n\t'
 # idiot-proof stop-step
 echo "This script will erase your drive and kill your family."
 echo "Are you sure you want to continue? (yes/no)"
+read sure
+if [[ "${sure}" == "yes" ]]; then
+  :
+else
+  exit 1
 
 #####################################################
 
