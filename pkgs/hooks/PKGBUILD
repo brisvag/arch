@@ -7,9 +7,8 @@ source ../common.sh
 # so need to write down things manually!
 
 package() {
-    mkdir -p "/etc/pacman.d/"
-    cp -a "${rootdir}"/hooks "/etc/pacman.d/"
-    cp -a "${rootdir}"/hooks.bin "/etc/pacman.d/"
-  fi
+    mkdir -p "${pkgdir}/etc/pacman.d/"
+    cp -a "${rootdir}"/hooks "${pkgdir}/etc/pacman.d/"
+    cp -a "${rootdir}"/hooks.bin "${pkgdir}/etc/pacman.d/"
   return 0
 }
