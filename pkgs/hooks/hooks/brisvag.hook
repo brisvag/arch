@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Install
+Operation = Upgrade
+Type = Package
+Target = brisvag-*
+
+[Action]
+When = PostTransaction
+Exec = /etc/pacman.d/hooks.bin/brisvaghook.sh
+
