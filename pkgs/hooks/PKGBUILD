@@ -3,4 +3,13 @@ pkgdesc='utility hooks for pacman and other stuff'
 
 source ../common.sh
 
-# this one is a special one, need to write down things manually!
+# this one is a special one, cause it sets up the hook for other packages,
+# so need to write down things manually!
+
+package() {
+    mkdir -p "/etc/pacman.d/"
+    cp -a "${rootdir}"/hooks "/etc/pacman.d/"
+    cp -a "${rootdir}"/hooks.bin "/etc/pacman.d/"
+  fi
+  return 0
+}
