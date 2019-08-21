@@ -19,20 +19,20 @@ def build_db():
 
 def fix_db():
     for tar in repo_dir.iterdir():
-        if tar.match('*.tar.xz'):
+        if tar.match(f'{repo_name}-*.pkg.tar.xz'):
             subprocess.run(f'repo-add {repo_name}.db.tar.xz {tar.name}', cwd=repo_dir, shell=True)
 
     # replace symlinks with the real files. Hacky but necessary, cause symlinks somehow are not resolved
-    db_dest = repo_dir / f'{repo_name}.db'
-    files_dest = repo_dir / f'{repo_name}.files'
-    db_old = repo_dir / f'{repo_name}.db.tar.xz'
-    files_old = repo_dir / f'{repo_name}.files.tar.xz'
-    db_old.rename(db_dest)
-    files_old.rename(files_dest)
+    # db_dest = repo_dir / f'{repo_name}.db'
+    # files_dest = repo_dir / f'{repo_name}.files'
+    # db_old = repo_dir / f'{repo_name}.db.tar.xz'
+    # files_old = repo_dir / f'{repo_name}.files.tar.xz'
+    # db_old.rename(db_dest)
+    # files_old.rename(files_dest)
 
 
 if __name__ == '__main__':
     # TODO: hacky. Should do a nicer update, instead of deleting everything
-    subprocess.run(f'rm -rf ./repo/{repo_name}*', cwd=Path(__file__).parent, shell=True)
+    # subprocess.run(f'rm -rf ./repo/{repo_name}*', cwd=Path(__file__).parent, shell=True)
     build_db()
     fix_db()
