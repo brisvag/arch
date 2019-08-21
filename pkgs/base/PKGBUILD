@@ -1,4 +1,4 @@
-name='core'
-pkgdesc='custom core packages and utilities'
+name='base'
+pkgdesc='custom collection of base programs and utilities'
 
 source ../common.sh
