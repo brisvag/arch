@@ -1,4 +1,4 @@
 name='core'
-pkgdesc='custom core packages and utilities'
+pkgdesc='custom core packages needed to handle and install the rest of the system'
 
 source ../common.sh
