@@ -1,11 +1,14 @@
 #!/bin/bash
 
-cd /home/brisvag/dotfiles/
+# hardcoded username
+user="brisvag"
+
+cd /home/${user}/dotfiles/
 
 directories=($(find ./ -mindepth 1 -type d))
 files=($(find ./ -type f))
 
-cd /home/brisvag/
+cd /home/${user}
 
 # make missing directories
 for dir in ${directories}; do
@@ -26,3 +29,5 @@ for file in ${files}; do
   ln -s dotfiles/${file} ${file}
 done
 
+# change permissions to user
+chown -R ${user}:users /home/${user}/dotfiles
