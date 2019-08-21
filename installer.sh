@@ -14,8 +14,9 @@ IFS=$'\n\t'
 
 # idiot-proof stop-step
 
-sure=$(dialog --stdout --inputbox "This script will erase your drive and kill your dog. \n
-                                   Are you sure you want to continue? (yes/no)" 0 0) || exit 1
+sure=$(dialog --stdout --inputbox "
+This script will erase your drive and kill your dog.
+Are you sure you want to continue? (yes/no)" 0 0) || exit 1
 clear
 : ${sure:?"sure cannot be empty"}
 
