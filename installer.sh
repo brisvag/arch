@@ -13,8 +13,9 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 IFS=$'\n\t'
 
 # idiot-proof stop-step
-echo "This script will erase your drive and kill your family."
-sure=$(dialog --stdout --inputbox "Are you sure you want to continue? (yes/no)" 0 0) || exit 1
+
+sure=$(dialog --stdout --inputbox "This script will erase your drive and kill your dog. \n
+                                   Are you sure you want to continue? (yes/no)" 0 0) || exit 1
 clear
 : ${sure:?"sure cannot be empty"}
 
@@ -33,11 +34,12 @@ timedatectl set-ntp true
 # necessary for rankmirrors
 pacman -Sy --noconfirm pacman-contrib
 
+# get mirrorlist backup (this way, if script is interrupted, no need to reboot)
+curl -s "${mirrorlist}" | sed -e 's/^#Server/Server/' -e '/^#/d' > /etc/pacman.d/mirrorlist.bak
+
 # update mirrorlist
 echo "Updating mirror list"
-curl -s "${mirrorlist}" | \
-  sed -e 's/^#Server/Server/' -e '/^#/d' | \
-  rankmirrors -n 10 - > /etc/pacman.d/mirrorlist
+rankmirrors -n 10 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
 
 #####################################################
 
