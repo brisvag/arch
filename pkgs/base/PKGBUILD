@@ -1,0 +1,4 @@
+name='core'
+pkgdesc='custom core packages and utilities'
+
+source ../common.sh
