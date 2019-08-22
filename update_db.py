@@ -48,6 +48,7 @@ def rename_db(backwards=False):
 
 if __name__ == '__main__':
     rename_db(backwards=True)
+    delete_old_packages()
     build_packages()
     update_db()
     rename_db()
