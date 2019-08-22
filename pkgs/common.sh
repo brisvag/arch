@@ -9,7 +9,7 @@ home="\${pkgdir}${HOME}"
 rootdir=${PWD}
 
 # version is rX.Y: X=number of revisions, Y=last commit hash
-# important: need to keep this file into account!
+# important: need to keep also this file into account for revision number!
 version() {
   printf "r%s.%s" \
          "$(git shortlog -s ${rootdir} "${rootdir}/../common.sh" | awk '{n += $1}; END{print n}')" \
