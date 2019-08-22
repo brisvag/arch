@@ -13,8 +13,16 @@ def build_packages():
     for dir in pkgs_dir.iterdir():
         if dir.is_dir():
             subprocess.run(['makepkg', '-fc'], cwd=dir)
-            # put everything in the repo directory
-            subprocess.run(f'mv *.tar.xz ../../repo/', cwd=dir, shell=True)
+            # put the package in the repo directory
+            for tar in dir.iterdir():
+                if tar.match(f'{repo_name}-*.pkg.tar.xz'):
+                    subprocess.run(f'mv {tar.name} ../../repo/', cwd=dir, shell=True)
+
+
+def delete_old_packages():
+    for tar in repo_dir.iterdir():
+        if tar.match(f'{repo_name}-*.pkg.tar.xz'):
+            subprocess.run(f'rm {tar.name}', cwd=repo_dir, shell=True)
 
 
 def update_db():
