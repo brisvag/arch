@@ -4,6 +4,8 @@ Metapackage repository for my arch-linux configuration
 **WARNING**: hardcoded paths are needed here and there (mainly to `/home/brisvag`/).
 Remember to change them if the user is different!
 
+This is partially fixed. It's important to run stuff as the user with `sudo`, otherwise it won't work.
+
 # Usage
 
 Add the following to `/etc/pacman.conf`:
