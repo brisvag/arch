@@ -26,7 +26,7 @@ for file in ${files}; do
   if [[ -f ${file} ]]; then
 	mv ${file} ${file}.pacbak
   fi
-  ln -s dotfiles/${file} ${file}
+  ln -s /home/${user}/dotfiles/${file} ${file}
   # change permissions to user
   chown ${user}:users dotfiles/${file}
   chown -h ${user}:users ${file}
