@@ -94,15 +94,14 @@ source /home/brisvag/.vim/scripts/diffchanges.vim
 " Hide mode, since lightline is taking care of that now
 set noshowmode
 
-
 " Vim-Plug settings:
 call plug#begin('~/.vim/plugged')
 Plug 'lervag/vimtex', { 'for': 'tex' }
-Plug 'python-mode/python-mode', { 'branch': 'develop' }
+Plug 'python-mode/python-mode', { 'for': 'python', 'branch': 'develop' }
 Plug 'itchyny/lightline.vim'
 Plug 'terryma/vim-multiple-cursors'
 Plug 'tpope/vim-eunuch'
-Plug 'Valloric/YouCompleteMe'
+Plug 'Valloric/YouCompleteMe', { 'do': 'python3 ./install.py' }
 Plug 'Shougo/neosnippet.vim'
 Plug 'Shougo/neosnippet-snippets'
 Plug 'xolox/vim-misc'
