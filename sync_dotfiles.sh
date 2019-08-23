@@ -24,5 +24,6 @@ for package in ${packages}; do
         cp /home/brisvag/${file} ${file}
       fi
     done
+    cd ${repodir}
   fi
 done
