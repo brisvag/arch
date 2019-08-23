@@ -16,6 +16,7 @@ if [[ -d "${dotfiles}" ]]; then
   cd "${dotfiles}"
 else
   exit 0
+fi
 
 directories=($(find ./ -mindepth 1 -type d))
 files=($(find ./ -type f))
