@@ -2,3 +2,4 @@ brisvag-hooks
 zsh
 zsh-completions
 oh-my-zsh-git
+ranger

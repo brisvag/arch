@@ -1,4 +1,4 @@
 name='zsh'
-pkgdesc='everything zsh related'
+pkgdesc='everything zsh and command-line related'
 
 source ../common.sh
