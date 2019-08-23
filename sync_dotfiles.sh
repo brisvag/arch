@@ -16,14 +16,14 @@ cd "${repodir}"
 packages=$(find ./ -mindepth 1 -maxdepth 1 -type d)
 
 for package in ${packages}; do
-  if [[ -d ${package}/dotfiles ]]; then
-    cd ${package}/dotfiles
+  if [[ -d "${package}/dotfiles" ]]; then
+    cd "${package}/dotfiles"
     files=$(find ./ -type f)
     for file in ${files}; do
-      if [[ -f /home/brisvag/${file} ]]; then
-        cp /home/brisvag/${file} ${file}
+      if [[ -f "/home/brisvag/${file}" ]]; then
+        cp "/home/brisvag/${file}" "${file}"
       fi
     done
-    cd ${repodir}
+    cd "${repodir}"
   fi
 done
