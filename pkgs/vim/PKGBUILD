@@ -1,0 +1,4 @@
+name='vim'
+pkgdesc='everything vim related'
+
+source ../common.sh

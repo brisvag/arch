@@ -1,0 +1,33 @@
+" Better command-line completion
+set wildmenu
+ 
+" Show partial commands in the last line of the screen
+set showcmd
+ 
+" Highlight searches. Also, search while typing
+set hlsearch
+set incsearch
+ 
+" Use case insensitive search, except when using capital letters
+set ignorecase
+set smartcase
+ 
+" Allow backspacing over autoindent, line breaks and start of insert action
+set backspace=indent,eol,start
+
+" Set the command window height to 2 lines, to avoid many cases of having to
+" "press <Enter> to continue"
+set cmdheight=2
+ 
+" Show context lines before and after the cursor
+set so=10
+ 
+" Quickly time out on keycodes, but never time out on mappings
+set notimeout ttimeout ttimeoutlen=200
+ 
+" tab remapping for easy indent
+nnoremap <Tab> >>_
+nnoremap <S-Tab> <<_
+inoremap <S-Tab> <C-D>
+vnoremap <Tab> >gv
+vnoremap <S-Tab> <gv

@@ -1,0 +1,12 @@
+post_install() {
+  # detect user. If root, do nothing.
+  user="${SUDO_USER}"
+  if [[ "${user}" != "" ]]; then
+    # install vim-plug
+    curl -fLo /home/${user}/.vim/autoload/plug.vim --create-dirs \
+      https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
+
+    su ${user}
+    # will this work with wakatime?
+    vim +PlugInstall +qall
+}
