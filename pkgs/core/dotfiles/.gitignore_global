@@ -1,0 +1,8 @@
+# pycharm stuff
+.idea
+
+# my temporary files
+*.tmp
+
+# python cache
+__pycache__/
