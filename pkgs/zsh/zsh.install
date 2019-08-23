@@ -1,10 +1,10 @@
 post_install() {
-  # variable for easier customization
-  user="brisvag"
+  # detect user. If root, do nothing.
+  user="${SUDO_USER}"
+  if [[ "${user}" != "" ]]; then
+    git clone https://github.com/zsh-users/zsh-autosuggestions \
+    /home/${user}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 
-  git clone https://github.com/zsh-users/zsh-autosuggestions \
-  /home/${user}/.oh-my-zsh/custom/plugins/zsh-autosuggestions
-
-  git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
-  /home/${user}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+    git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
+    /home/${user}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 }
