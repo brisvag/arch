@@ -27,7 +27,7 @@ for file in ${files}; do
 	mv ${file} ${file}.pacbak
   fi
   ln -s dotfiles/${file} ${file}
+  # change permissions to user
+  chown ${user}:users dotfiles/${file}
+  chown ${user}:users ${file}
 done
-
-# change permissions to user
-chown -R ${user}:users /home/${user}/dotfiles
