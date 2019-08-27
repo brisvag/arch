@@ -1,0 +1,4 @@
+name='desktop'
+pkgdesc='collection of everything I normally want in my desktop installation'
+
+source ../common.sh

@@ -1,0 +1,7 @@
+# my stuff
+brisvag-hooks
+brisvag-base
+brisvag-i3wm
+
+# groups and additional packages
+xorg
