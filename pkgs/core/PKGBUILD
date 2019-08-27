@@ -1,4 +1,14 @@
 name='core'
-pkgdesc='custom core packages needed to handle and install the rest of the system'
+pkgdesc='provides hooks and utilities needed to handle and install all the other metapackages'
 
 source ../common.sh
+
+# this one is a special one, cause it sets up the hooks for other packages,
+# so need to overwrite things manually!
+
+package() {
+    mkdir -p "${pkgdir}/etc/pacman.d/"
+    cp -a "${rootdir}"/hooks "${pkgdir}/etc/pacman.d/"
+    cp -a "${rootdir}"/hooks.bin "${pkgdir}/etc/pacman.d/"
+  return 0
+}

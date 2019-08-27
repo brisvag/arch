@@ -1,5 +1,5 @@
-# my stuff
-brisvag-hooks
+# needs
+coreutils
 
-# utilities
+# provides
 git
