@@ -9,4 +9,5 @@ post_install() {
     su ${user}
     # will this work with wakatime?
     vim +PlugInstall +qall
+  fi
 }
