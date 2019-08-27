@@ -1,4 +1,7 @@
-brisvag-hooks
+# needs
+brisvag-core
+
+# provides
 zsh
 zsh-completions
 oh-my-zsh-git

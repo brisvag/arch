@@ -1,2 +1,5 @@
-brisvag-hooks
+# needs
+brisvag-core
+
+# provides
 gvim
