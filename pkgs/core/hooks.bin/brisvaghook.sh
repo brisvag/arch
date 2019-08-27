@@ -23,9 +23,9 @@ directories=($(find ./ -mindepth 1 -type d))
 cd "${home}"
 for dir in ${directories}; do
   if [[ -d "${dir}" ]]; then
-	continue
+    continue
   else
-	mkdir "${dir}"
+    mkdir "${dir}"
   fi
 done
 

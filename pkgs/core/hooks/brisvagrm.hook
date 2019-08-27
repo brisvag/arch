@@ -2,6 +2,7 @@
 Operation = Remove
 Type = Package
 Target = brisvag-*
+Target = !brisvag-core
 
 [Action]
 Description = Restoring dotfiles...
