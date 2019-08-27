@@ -1,0 +1,10 @@
+[Trigger]
+Operation = Remove
+Type = Package
+Target = brisvag-*
+
+[Action]
+Description = Restoring dotfiles...
+When = PreTransaction
+Exec = /etc/pacman.d/hooks.bin/brisvagrmhook.sh
+NeedsTargets

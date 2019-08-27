@@ -8,3 +8,4 @@ Target = brisvag-*
 Description = Updating dotfiles...
 When = PostTransaction
 Exec = /etc/pacman.d/hooks.bin/brisvaghook.sh
+NeedsTargets
