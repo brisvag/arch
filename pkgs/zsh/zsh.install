@@ -7,4 +7,5 @@ post_install() {
 
     git clone https://github.com/zsh-users/zsh-syntax-highlighting.git \
     /home/${user}/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
+  fi
 }
