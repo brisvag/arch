@@ -1,0 +1,4 @@
+name='utils'
+pkgdesc='custom collection of core utilities not present in base or base-devel'
+
+source ../common.sh
