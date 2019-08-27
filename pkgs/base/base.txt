@@ -1,14 +1,6 @@
 # my stuff
 brisvag-hooks
 brisvag-core
+brisvag-utils
 brisvag-zsh
 brisvag-vim
-
-# utilities
-reflector
-wget
-zip
-tar
-pacman-contrib
-dialog
-htop
