@@ -19,7 +19,7 @@ dotfiles="${home}/dotfiles"
 
 # make missing directories
 cd "${dotfiles}"
-directories=($(find ./ -mindepth 1 -type d |))
+directories=($(find ./ -mindepth 1 -type d))
 cd "${home}"
 for dir in ${directories}; do
   if [[ -d "${dir}" ]]; then
