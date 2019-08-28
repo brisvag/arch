@@ -10,10 +10,13 @@ rootdir=${PWD}
 
 # version is rX.Y: X=number of revisions, Y=last commit hash
 # important: need to keep also this file into account for revision number!
+# however, only count commits of this file AFTER the package was first created
 version() {
-  printf "r%s.%s" \
-         "$(git shortlog -s ${rootdir} "${rootdir}/../common.sh" | awk '{n += $1}; END{print n}')" \
-         "$(git log -n 1 --pretty=format:%h -- ${rootdir} "${rootdir}/../common.sh")"
+  this="${rootdir}/../common.sh"
+  startdate=$(git log --follow --date=short --pretty=format:%ad --diff-filter=A "${this}")
+  ncommits=$(git shortlog -s --since="${startdate}" "${rootdir}" "${this}" | awk '{n += $1}; END{print n}')
+  lasthash=$(git log -n 1 --pretty=format:%h -- "${rootdir}" "${this}")
+  printf "r%s.%s" "${ncommits}" "${lasthash}"
 }
 pkgver=$(version)
 pkgrel=1
@@ -36,4 +39,6 @@ package() {
     cp -a "${rootdir}"/dotfiles "${home}"
   fi
   return 0
+}
+
 }
