@@ -21,7 +21,7 @@ post_upgrade() {
 
 post_remove() {
   # restore old pacman.conf
-  if [[ -f "/etc/pacman.conf.pacbak" ]; then
+  if [[ -f "/etc/pacman.conf.pacbak" ]]; then
     mv "/etc/pacman.conf.pacbak" "/etc/pacman.conf"
   fi
 }
