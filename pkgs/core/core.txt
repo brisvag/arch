@@ -1,5 +1,21 @@
-# needs
-coreutils
-
 # provides
+
+# base group
+bash bzip2 coreutils cryptsetup device-mapper dhcpcd diffutils
+e2fsprogs file filesystem findutils gawk gcc-libs gettext
+glibc grep gzip inetutils iproute2 iputils jfsutils
+less licenses linux linux-firmware logrotate lvm2 man-db
+man-pages mdadm nano netctl pacman pciutils perl
+procps-ng psmisc reiserfsprogs s-nail sed shadow
+sysfsutils systemd-sysvcompat tar texinfo usbutils util-linux
+vi which xfsprogs
+
+# base-devel group
+autoconf automake binutils bison fakeroot file findutils flex
+gawk gcc gettext grep groff gzip libtool m4 make
+pacman patch pkgconf sed sudo systemd texinfo
+util-linux which
+
+# additional stuff
 git
+# yay is installed with post_install hook

@@ -1,7 +1,14 @@
 post_install() {
-  chmod -R 755 "/etc/pacman.d/hooks.bin/"
+  # install yay for future things, if not present
+  if ! [[ -x $(command -v yay) ]]; then
+    cd /tmp
+    git clone https://aur.archlinux.org/yay.git && cd yay
+    makepkg -si && cd /tmp && rm yay
+  fi
+
+  post_upgrade
 }
 
 post_upgrade() {
-  post_install
+  chmod -R 755 "/etc/pacman.d/hooks.bin/"
 }
