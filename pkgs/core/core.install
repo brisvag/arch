@@ -12,6 +12,7 @@ post_install() {
     makepkg -si && cd /tmp && rm yay
   fi
 
+  # include post_upgrade stuff
   post_upgrade
 }
 
