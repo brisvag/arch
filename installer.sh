@@ -25,15 +25,15 @@ mirrorlist="https://www.archlinux.org/mirrorlist/all/"
 # set ntp as active
 timedatectl set-ntp true
 
-# necessary for rankmirrors
-pacman -Sy --noconfirm pacman-contrib
-
-# get mirrorlist backup (this way, if script is interrupted, no need to reboot)
-curl -s "${mirrorlist}" | sed -e 's/^#Server/Server/' -e '/^#/d' > /etc/pacman.d/mirrorlist.bak
-
-# update mirrorlist
-echo "Updating mirror list"
-rankmirrors -n 10 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
+## necessary for rankmirrors
+#pacman -Sy --noconfirm pacman-contrib
+#
+## get mirrorlist backup (this way, if script is interrupted, no need to reboot)
+#curl -s "${mirrorlist}" | sed -e 's/^#Server/Server/' -e '/^#/d' > /etc/pacman.d/mirrorlist.bak
+#
+## update mirrorlist
+#echo "Updating mirror list"
+#rankmirrors -n 10 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
 
 #####################################################
 
@@ -116,14 +116,14 @@ case ${format_disk} in
     if [[ ${makeswap} -eq 0 ]]; then
       makeswapcommand="mkpart primary linux-swap ${boot_size} ${swap_size}"
       root_start=$((${boot_size} + ${swap_size}))
-    else;
+    else
       root_start=${boot_size}
     fi
     if [[ ${makehome} -eq 0 ]]; then
       root_end=$((${root_start} + ${root_size}))
       makerootcommand="mkpart primary ext4 ${root_start} ${root_end}"
       makehomecommand="mkpart primary ext4 ${root_end} 100%"
-    else;
+    else
       makerootcommand="mkpart primary ext4 ${root_start} 100%"
     fi
 
