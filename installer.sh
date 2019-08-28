@@ -132,6 +132,11 @@ case ${format_disk} in
     ${makeswapcommand}
     ${makerootcommand}
     ${makehomecommand}"
+    ;;
+  *)
+    echo "nothing"
+    ;;
+esac
 
 #    parted --script "${device}" -- mklabel gpt \
 #      mkpart ESP fat32 0 129MiB \
