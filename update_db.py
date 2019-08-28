@@ -62,7 +62,7 @@ def delete_old_packages(update_list, remove_list):
     deletes old tar files
     :param update_list: dictionary with packages to update
     """
-    for pkg in list(update_list.items()) + remove_list:
+    for pkg in list(update_list.keys()) + remove_list:
         for tar in repo_dir.iterdir():
             if tar.match(f'{repo_name}-{pkg}-*.pkg.tar.xz'):
                 subprocess.run(f'rm {tar.name}', cwd=repo_dir, shell=True)
