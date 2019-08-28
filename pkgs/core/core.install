@@ -1,11 +1,10 @@
-pre_install() {
-  # move old pacman.conf oit of the way
+post_install() {
+  # move old pacman.conf ot of the way and replace it
   if [[ -f "/etc/pacman.conf" ]]; then
     mv "/etc/pacman.conf" "/etc/pacman.conf.pacbak"
+    cp "/etc/pacman.conf.template" "/etc/pacman.conf"
   fi
-}
 
-post_install() {
   # install yay for future things, if not present
   if ! [[ -x $(command -v yay) ]]; then
     cd /tmp
