@@ -57,12 +57,12 @@ def build_packages(update_list):
                 subprocess.run(f'mv {tar.name} ../../repo/', cwd=dir, shell=True)
 
 
-def delete_old_packages(update_list):
+def delete_old_packages(update_list, remove_list):
     """
     deletes old tar files
     :param update_list: dictionary with packages to update
     """
-    for pkg, _ in update_list.items():
+    for pkg in list(update_list.items()) + remove_list:
         for tar in repo_dir.iterdir():
             if tar.match(f'{repo_name}-{pkg}-*.pkg.tar.xz'):
                 subprocess.run(f'rm {tar.name}', cwd=repo_dir, shell=True)
@@ -104,7 +104,7 @@ def rename_db(backwards=False):
 if __name__ == '__main__':
     update_list, remove_list = parse_input()
     rename_db(backwards=True)
-    delete_old_packages(update_list)
+    delete_old_packages(update_list, remove_list)
     build_packages(update_list)
     update_db(update_list, remove_list)
     rename_db()
