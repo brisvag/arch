@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Installer script for arch-linux
-# Based on mdaffin's script at https://github.com/mdaffin/arch-pkgs
+# Based on brisvag's script at https://github.com/brisvag/arch-pkgs
 
 # run with: curl -sL https://git.io/brisvag-arch | bash
 
@@ -13,16 +13,9 @@ trap 's=$?; echo "$0: Error on line "$LINENO": $BASH_COMMAND"; exit $s' ERR
 IFS=$'\n\t'
 
 # idiot-proof stop-step
-
-sure=$(dialog --stdout --inputbox "
-This script will erase your drive and kill your dog.
-Are you sure you want to continue? (yes/no)" 0 0) || exit 1
+dialog --stdout --yesno "This script might erase your drive and kill your dog.
+                         Are you sure you want to continue?" 0 0 || exit 1
 clear
-: ${sure:?"sure cannot be empty"}
-
-if [[ "${sure}" != "yes" ]]; then
-  exit 1
-fi
 
 #####################################################
 
@@ -44,16 +37,16 @@ rankmirrors -n 10 /etc/pacman.d/mirrorlist.bak > /etc/pacman.d/mirrorlist
 
 #####################################################
 
-# require input for configuration
-dryrun=$(dialog --stdout --inputbox "Is this a dry run? (yes/no)" 0 0) || exit 1
+# require several inputs for configuration
+dialog --stdout --yesno "Is this a dry run?" 0 0
+dryrun=$?
 clear
-: ${dryrun:?"dryrun cannot be empty"}
 
 hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
 clear
 : ${hostname:?"hostname cannot be empty"}
 
-User=$(dialog --stdout --inputbox "Enter username" 0 0) || exit 1
+user=$(dialog --stdout --inputbox "Enter username" 0 0) || exit 1
 clear
 : ${user:?"user cannot be empty"}
 
@@ -64,11 +57,46 @@ password2=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || e
 clear
 [[ "$password" == "$password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
-devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | tac)
-device=$(dialog --stdout --menu "Select installtion disk" 0 0 0 ${devicelist}) || exit 1
+dialog --stdout --yesno "Do you want to wipe and format a disk?
+                         Choose no to install alongside existing partitions.
+                         (You first need to create them!)" 0 0
+format_disk=$?
+clear
+case ${format_disk} in
+  # yes. Disk will be wiped, formatted and linux installed
+  0)
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop|rom" | tac)
+    device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
+    clear
+    makehome=$(dialog --stdout --yesno "Do you want to create a home partition?" 0 0)
+    clear
+    makeswap=$(dialog --stdout --yesno "Do you want to create a swap partition?" 0 0)
+    clear
+    ;;
+  # no. Choose partitions one by one.
+  *)
+    devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
+                 awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
+    rootpart=$(dialog --stdout --menu "Select root partition" 0 0 0 ${devicelist}) || exit 1
+    clear
+    bootpart=$(dialog --stdout --menu "Select boot partition" 0 0 0 ${devicelist}) || exit 1
+    clear
+    homepart=$(dialog --stdout --menu "Select home partition, if you want it" 0 0 0 ${devicelist})
+    # if cancel is pressed, don't create a home partition
+    nohome=$?
+    [[ ${nohome} -eq 0 ]] || [[ ${nohome} -eq 1 ]] || exit 1
+    clear
+    swappart=$(dialog --stdout --menu "Select swap partition, if you want it" 0 0 0 ${devicelist})
+    # if cancel is pressed, don't create a swap partition
+    noswap=$?
+    [[ ${noswap} -eq 0 ]] || [[ ${noswap} -eq 1 ]] || exit 1
+    clear
+    ;;
+esac
 clear
 
-if [[ ${dryrun} != "no" ]]; then
+# if dryrun answer was yes (or KeyboardInterrupt), exit
+if [[ ${dryrun} -eq 0 ]] || [[ ${dryrun} -eq 255 ]]; then
   exit 1
 
 #####################################################
@@ -77,15 +105,39 @@ if [[ ${dryrun} != "no" ]]; then
 exec 1> >(tee "stdout.log")
 exec 2> >(tee "stderr.log")
 
-# setup the disk and partitions
+boot_size=512
 swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
-#swap_end=$(( $swap_size + 129 + 1 ))MiB
+root_size=20480
 
-#parted --script "${device}" -- mklabel gpt \
-#  mkpart ESP fat32 1Mib 129MiB \
-#  set 1 boot on \
-#  mkpart primary linux-swap 129MiB ${swap_end} \
-#  mkpart primary ext4 ${swap_end} 100%
+case ${format_disk} in
+  # yes. Disk will be wiped, formatted and linux installed
+  0)
+    makebootcommand="mkpart EDP fat32 0% ${boot_size} set 1 boot on"
+    if [[ ${makeswap} -eq 0 ]]; then
+      makeswapcommand="mkpart primary linux-swap ${boot_size} ${swap_size}"
+      root_start=$((${boot_size} + ${swap_size}))
+    else;
+      root_start=${boot_size}
+    fi
+    if [[ ${makehome} -eq 0 ]]; then
+      root_end=$((${root_start} + ${root_size}))
+      makerootcommand="mkpart primary ext4 ${root_start} ${root_end}"
+      makehomecommand="mkpart primary ext4 ${root_end} 100%"
+    else;
+      makerootcommand="mkpart primary ext4 ${root_start} 100%"
+    fi
+
+    echo "parted --script ${device} -- mklabel gpt
+    ${makebootcommand}
+    ${makeswapcommand}
+    ${makerootcommand}
+    ${makehomecommand}"
+
+#    parted --script "${device}" -- mklabel gpt \
+#      mkpart ESP fat32 0 129MiB \
+#      set 1 boot on \
+#      mkpart primary linux-swap 129MiB ${swap_end} \
+#      mkpart primary ext4 ${swap_end} 100%
 
 ## Simple globbing was not enough as on one device I needed to match /dev/mmcblk0p1
 ## but not /dev/mmcblk0boot1 while being able to match /dev/sda1 on other devices.
@@ -108,17 +160,17 @@ swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
 
 #### Install and configure the basic system ###
 #cat >>/etc/pacman.conf <<EOF
-#[mdaffin]
+#[brisvag]
 #SigLevel = Optional TrustAll
 #Server = $REPO_URL
 #EOF
 
-#pacstrap /mnt mdaffin-desktop
+#pacstrap /mnt brisvag-desktop
 #genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
 #echo "${hostname}" > /mnt/etc/hostname
 
 #cat >>/mnt/etc/pacman.conf <<EOF
-#[mdaffin]
+#[brisvag]
 #SigLevel = Optional TrustAll
 #Server = $REPO_URL
 #EOF
