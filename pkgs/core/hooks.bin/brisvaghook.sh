@@ -30,8 +30,8 @@ for dir in ${directories}; do
 done
 
 # get list of dotfiles owned by the installed packages
-files=($(find $(pacman -Ql ${pkgs} | awk '{print $2}') -maxdepth 0 -type f | \
-       xargs -n 1 realpath --relative-to="${dotfiles}"))
+files=$(find $(pacman -Ql ${pkgs} | awk '{print $2}') -maxdepth 0 -type f | \
+       xargs -n 1 realpath --relative-to="${dotfiles}")
 # backup files if needed, and make necessary links
 for file in ${files}; do
   # if the file exist and is not a symlink, make a backup

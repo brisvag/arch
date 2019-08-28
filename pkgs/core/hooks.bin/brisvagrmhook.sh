@@ -18,8 +18,8 @@ dotfiles="${home}/dotfiles"
 [[ -d "${dotfiles}" ]] || exit 0
 
 # get list of dotfiles owned by the removed packages
-files=($(find $(pacman -Ql ${pkgs} | awk '{print $2}') -maxdepth 0 -type f | \
-       xargs -n 1 realpath --relative-to="${dotfiles}"))
+files=$(find $(pacman -Ql ${pkgs} | awk '{print $2}') -maxdepth 0 -type f | \
+       xargs -n 1 realpath --relative-to="${dotfiles}")
 # restore backupped packages
 for file in ${files}; do
   if [[ -f "${home}/${file}.pacbak" ]]; then
