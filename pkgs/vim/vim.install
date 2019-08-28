@@ -8,6 +8,6 @@ post_install() {
 
     su ${user}
     # will this work with wakatime??
-#    vim +PlugInstall +qall
+    vim +PlugInstall +qall </dev/tty > /dev/tty
   fi
 }
