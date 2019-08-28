@@ -9,8 +9,8 @@ post_install() {
     # change ownership of files
     chown -Rh ${user}:users /home/${user}/.vim/
 
-    su ${user}
     # will this work with wakatime??
-    vim +PlugInstall +qall </dev/tty > /dev/tty
+    # need to run this as $user
+    sudo -Hu ${user} vim +PlugInstall +qall < /dev/tty > /dev/tty
   fi
 }
