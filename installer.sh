@@ -58,15 +58,17 @@ password2=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || e
 clear
 [[ "$password" == "$password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
-format_disk=$(dialog --stdout --menu "Do you want to wipe and format a disk?" 0 0 0 \
-              "Yes" "You will select a device to completely erase" \
-              "No" "Partitions are ready, I'll choose them (You first need to create them!)") || exit 1
+format_disk=$(dialog --stdout --no-tags --menu "Do you want to wipe and format a disk?" 0 0 0 \
+              0 "Yes, I'll choose a disk to be completely wiped." \
+              1 "No, format a whole partition. It will be divided in all the necessary partitions." \
+              2 "No, I have partitions ready. (You will be prompted to choose which one is which)") || exit 1
 clear
 
 case ${format_disk} in
   # yes. Disk will be wiped, formatted and linux installed
-  "Yes")
-    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop|rom" | tac)
+  0)
+    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop|rom" | \
+                 awk '{print $1"\t"$2}' | tac)
     device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
     clear
     makehome=$(dialog --stdout --yesno "Do you want to create a home partition?" 0 0)
@@ -74,8 +76,19 @@ case ${format_disk} in
     makeswap=$(dialog --stdout --yesno "Do you want to create a swap partition?" 0 0)
     clear
     ;;
+  # no. Choose one partition to be wiped
+  1)
+    devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
+                 awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
+    device=$(dialog --stdout --menu "Select installation partition" 0 0 0 ${devicelist}) || exit 1
+    clear
+    makehome=$(dialog --stdout --yesno "Do you want to create a home partition?" 0 0)
+    clear
+    makeswap=$(dialog --stdout --yesno "Do you want to create a swap partition?" 0 0)
+    clear
+    ;;
   # no. Choose partitions one by one.
-  "No")
+  2)
     devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
                  awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
     rootpart=$(dialog --stdout --menu "Select root partition" 0 0 0 ${devicelist}) || exit 1
@@ -92,13 +105,13 @@ case ${format_disk} in
     noswap=$?
     [[ ${noswap} -eq 0 ]] || [[ ${noswap} -eq 1 ]] || exit 1
     clear
-    ;;
 esac
 clear
 
 # if dryrun answer was yes (or KeyboardInterrupt), exit
 if [[ ${dryrun} == "Yes" ]]; then
   exit 1
+fi
 
 #####################################################
 
@@ -112,32 +125,33 @@ root_size=20480
 
 case ${format_disk} in
   # yes. Disk will be wiped, formatted and linux installed
-  "Yes")
-    makebootcommand="mkpart EDP fat32 0% ${boot_size} set 1 boot on"
+  0)
+    # create gpt table
+    gptcommand="mklabel gpt"
+    makebootcommand="mkpart EDP fat32 0% ${boot_size}MiB set 1 boot on"
     if [[ ${makeswap} -eq 0 ]]; then
-      makeswapcommand="mkpart primary linux-swap ${boot_size} ${swap_size}"
+      makeswapcommand="mkpart primary linux-swap ${boot_size}MiB ${swap_size}MiB"
       root_start=$((${boot_size} + ${swap_size}))
     else
       root_start=${boot_size}
     fi
     if [[ ${makehome} -eq 0 ]]; then
       root_end=$((${root_start} + ${root_size}))
-      makerootcommand="mkpart primary ext4 ${root_start} ${root_end}"
-      makehomecommand="mkpart primary ext4 ${root_end} 100%"
+      makerootcommand="mkpart primary ext4 ${root_start}MiB ${root_end}MiB"
+      makehomecommand="mkpart primary ext4 ${root_end}MiB 100%"
     else
-      makerootcommand="mkpart primary ext4 ${root_start} 100%"
+      makerootcommand="mkpart primary ext4 ${root_start}MiB 100%"
     fi
-
-    echo "parted --script ${device} -- mklabel gpt
-    ${makebootcommand}
-    ${makeswapcommand}
-    ${makerootcommand}
-    ${makehomecommand}"
     ;;
-  "No")
+  1)
     echo "nothing"
-    ;;
 esac
+
+parted --script ${device} -- gptcommand \
+${makebootcommand} \
+${makeswapcommand} \
+${makerootcommand} \
+${makehomecommand}
 
 #    parted --script "${device}" -- mklabel gpt \
 #      mkpart ESP fat32 0 129MiB \
