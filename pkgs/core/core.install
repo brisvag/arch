@@ -5,13 +5,6 @@ post_install() {
     cp "/etc/pacman.conf.template" "/etc/pacman.conf"
   fi
 
-  # install yay for future things, if not present
-  if ! [[ -x $(command -v yay) ]]; then
-    cd /tmp
-    git clone https://aur.archlinux.org/yay.git && cd yay
-    makepkg -si && cd /tmp && rm yay
-  fi
-
   # include post_upgrade stuff
   post_upgrade
 }

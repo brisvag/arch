@@ -18,4 +18,3 @@ util-linux which
 
 # additional stuff
 git
-# yay is installed with post_install hook
