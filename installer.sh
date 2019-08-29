@@ -38,8 +38,9 @@ timedatectl set-ntp true
 #####################################################
 
 # require several inputs for configuration
-dialog --stdout --yesno "Is this a dry run?" 0 0
-dryrun=$?
+dryrun=$(dialog --stdout --menu "Is this a dry run?" 0 0 0 \
+         "Yes" "Fake the run and show me what you'll do" \
+         "No" "Do your thing") || exit 1
 clear
 
 hostname=$(dialog --stdout --inputbox "Enter hostname" 0 0) || exit 1
@@ -57,14 +58,14 @@ password2=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || e
 clear
 [[ "$password" == "$password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
-dialog --stdout --yesno "Do you want to wipe and format a disk?
-                         Choose no to install alongside existing partitions.
-                         (You first need to create them!)" 0 0
-format_disk=$?
+format_disk=$(dialog --stdout --menu "Do you want to wipe and format a disk?" 0 0 0 \
+              "Yes" "You will select a device to completely erase" \
+              "No" "Partitions are ready: let me choose them (You first need to create them!)" || exit 1
 clear
+
 case ${format_disk} in
   # yes. Disk will be wiped, formatted and linux installed
-  0)
+  "Yes")
     devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop|rom" | tac)
     device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
     clear
@@ -74,7 +75,7 @@ case ${format_disk} in
     clear
     ;;
   # no. Choose partitions one by one.
-  *)
+  "No")
     devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
                  awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
     rootpart=$(dialog --stdout --menu "Select root partition" 0 0 0 ${devicelist}) || exit 1
@@ -96,7 +97,7 @@ esac
 clear
 
 # if dryrun answer was yes (or KeyboardInterrupt), exit
-if [[ ${dryrun} -eq 0 ]] || [[ ${dryrun} -eq 255 ]]; then
+if [[ ${dryrun} == "Yes" ]]; then
   exit 1
 
 #####################################################
@@ -111,7 +112,7 @@ root_size=20480
 
 case ${format_disk} in
   # yes. Disk will be wiped, formatted and linux installed
-  0)
+  "Yes")
     makebootcommand="mkpart EDP fat32 0% ${boot_size} set 1 boot on"
     if [[ ${makeswap} -eq 0 ]]; then
       makeswapcommand="mkpart primary linux-swap ${boot_size} ${swap_size}"
@@ -133,7 +134,7 @@ case ${format_disk} in
     ${makerootcommand}
     ${makehomecommand}"
     ;;
-  *)
+  "No")
     echo "nothing"
     ;;
 esac
