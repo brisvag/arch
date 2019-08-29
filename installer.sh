@@ -60,7 +60,7 @@ clear
 
 format_disk=$(dialog --stdout --menu "Do you want to wipe and format a disk?" 0 0 0 \
               "Yes" "You will select a device to completely erase" \
-              "No" "Partitions are ready: let me choose them (You first need to create them!)") || exit 1
+              "No" "Partitions are ready, I'll choose them (You first need to create them!)") || exit 1
 clear
 
 case ${format_disk} in
