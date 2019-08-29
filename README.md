@@ -6,6 +6,9 @@ Remember to change them if the user is different!
 
 This is partially fixed. It's important to run stuff as the user with `sudo`, otherwise it won't work.
 
+For now, `brisvag-core` should be installed with chroot. After that, everything should be installed
+as user from within the system.
+
 # Usage
 
 Add the following to `/etc/pacman.conf`:
