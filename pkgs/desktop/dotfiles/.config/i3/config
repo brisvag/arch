@@ -1,0 +1,278 @@
+# ################ #
+# GENERAL SETTINGS #
+# ################ #
+
+# GLOBALS
+
+# mod key is Windows Key
+set $mod Mod4
+# set workspaces as variables for faster configuration
+set $ws1 1
+set $ws2 2
+set $ws3 3
+set $ws4 4
+set $ws5 5
+set $ws6 6
+set $ws7 7
+set $ws8 8
+set $ws9 9
+set $ws10 10
+
+# APPEARANCE
+
+# font for windows and terminals
+font pango:inconsolata bold 14
+#font pango:DejaVu Sans Mono 8
+# bar colors settings
+set $active_bg_color		#393939
+set $active_text_color		#FFFFFF
+set $active_border_color	#BEBEBE
+set $inactive_bg_color		#1F1F1F
+set $inactive_text_color	#929292
+set $urgent_bg_color		#900000
+set $urgent_text_color		#FFFFFF
+set $placeholder_color		#0c0c0c
+set $client_bg				#FFFFFF
+# Start i3blocks
+bar {
+        status_command i3blocks -c ~/.config/i3/i3blocks.conf
+	colors {
+		background $inactive_bg_color
+		separator $inactive_text_color
+		#					border				background				text
+		focused_workspace	$active_bg_color	$active_bg_color		$active_text_color
+		inactive_workspace	$inactive_bg_color	$inactive_bg_color		$inactive_text_color
+	}
+}
+# set colors for windows and borders
+# class                 border  			backgr. 			text    			indicator 				child_border
+client.focused          $active_bg_color	$active_bg_color	$active_text_color	$active_border_color	$active_bg_color
+client.focused_inactive $inactive_bg_color	$inactive_bg_color	$active_text_color	$inactive_bg_color		$inactive_bg_color
+client.unfocused        $inactive_bg_color	$inactive_bg_color	$active_text_color	$inactive_bg_color		$inactive_bg_color
+client.urgent           $urgent_bg_color	$urgent_bg_color	$urgent_text_color	$urgent_bg_color		$urgent_bg_color
+client.placeholder      $placeholder_color	$placeholder_color	$active_text_color	$placeholder_color		$placeholder_color
+client.background       $client_bg
+# add gaps (if you want to remove title bars, change 'normal' to 'pixel')
+for_window [class="^.*"] border normal 2
+gaps inner 8
+gaps outer -1
+# show borders and gaps only when the workspace has more than one container
+smart_borders on
+smart_gaps on
+# title format
+for_window [class="^.*"] title_format "<span font_weight='heavy' >%title</span>"
+
+# Title bar icons
+#for_window [class="(?i)firefox"] title_format "<tt></tt><span foreground='#FF6611'>  </span><tt> </tt>%title"
+#for_window [class="(.*)urxvt(.*)"] title_format "<tt></tt><span foreground='#00FF00' background='#000000'>  </span><tt> </tt>%title"
+#for_window [class="(.*)Chromium-browser(.*)"] title_format "<tt></tt><span foreground='#367dd0' background='#d9e5f4'>  </span><tt> </tt>%title"
+#for_window [class="Evolution"] title_format "<tt></tt><span foreground='#FFFFFF' >  </span><tt> </tt>%title"
+#for_window [title=".* Evolution"] title_format "<tt></tt><span foreground='#FFFFFF' >  </span><tt> </tt>%title"
+#for_window [class="Slack"] title_format "<tt></tt><span foreground='#FFFFFF' >  </span><tt> </tt>%title"
+#for_window [class="Signal"] title_format "<tt></tt><span background='#2090ea' foreground='#FFFFFF' >  </span><tt> </tt>%title"
+#for_window [class="VirtualBox Machine"] title_format "<tt></tt><span  background='#073624' foreground='#AAAAFF' >  </span><tt> </tt>%title"
+#for_window [class="VirtualBox Manager"] title_format "<tt></tt><span  background='#073642' foreground='#AAAAFF' >  </span><tt> </tt>%title"
+#for_window [class="libreoffice-writer"] title_format "<tt></tt><span  background='#073642' foreground='#adc5e7' >  </span><tt> </tt>%title"
+#for_window [class="libreoffice-calc"] title_format "<tt></tt><span  background='#073642' foreground='#add58a' >  </span><tt> </tt>%title"
+#for_window [class="libreoffice-impress"] title_format "<tt></tt><span  background='#073642' foreground='#d07e7e' >  </span><tt> </tt>%title"
+
+
+# WINDOW-SPECIFIC SETTINGS
+
+# make spotify open on workspace 10
+for_window [class="Spotify"] move to workspace $ws10
+# make franz open on the scratchpad with the right size
+for_window [class="Franz"] move scratchpad
+for_window [class="Franz"] resize set 1400 900, move absolute position center
+# fix vmd layout on startup
+for_window [title="VMD Main"] floating toggle
+# make riot open on workspace 8
+for_window [class="Riot"] move to workspace $ws8
+# make bitwarden open on workspace 8
+for_window [class="Bitwarden"] move to workspace $ws8
+
+# ############ #
+# KEY BINDINGS #
+# ############ #
+
+# WINDOW MANAGEMENT
+
+# Use Mouse+$mod to drag floating windows to their wanted position
+floating_modifier $mod
+# kill focused window
+bindsym $mod+q kill
+# change focus
+bindsym $mod+Left focus left
+bindsym $mod+Down focus down
+bindsym $mod+Up focus up
+bindsym $mod+Right focus right
+# change focus (vimlike)
+bindsym $mod+h focus left
+bindsym $mod+j focus down
+bindsym $mod+k focus up
+bindsym $mod+l focus right
+# move focused window
+bindsym $mod+Shift+Left move left
+bindsym $mod+Shift+Down move down
+bindsym $mod+Shift+Up move up
+bindsym $mod+Shift+Right move right
+# move focused window (vimlike)
+bindsym $mod+Shift+h move left
+bindsym $mod+Shift+j move down
+bindsym $mod+Shift+k move up
+bindsym $mod+Shift+l move right
+# resize focused window
+bindsym $mod+Mod1+Left resize shrink width 2 px or 2 ppt
+bindsym $mod+Mod1+Up resize grow height 2 px or 2 ppt
+bindsym $mod+Mod1+Down resize shrink height 2 px or 2 ppt
+bindsym $mod+Mod1+Right resize grow width 2 px or 2 ppt
+# resize focused window (vimlike)
+bindsym $mod+Mod1+h resize shrink width 2 px or 2 ppt
+bindsym $mod+Mod1+j resize grow height 2 px or 2 ppt
+bindsym $mod+Mod1+k resize shrink height 2 px or 2 ppt
+bindsym $mod+Mod1+l resize grow width 2 px or 2 ppt
+# split in horizontal orientation
+bindsym $mod+g split h
+# split in vertical orientation
+bindsym $mod+v split v
+# enter fullscreen mode for the focused container
+bindsym $mod+f fullscreen toggle
+# change container layout (stacked, tabbed, toggle split)
+bindsym $mod+s layout stacking
+bindsym $mod+w layout tabbed
+bindsym $mod+e layout toggle split
+# toggle tiling / floating
+bindsym $mod+Shift+space floating toggle
+# toggle sticky window
+bindsym $mod+o sticky toggle
+# change focus between tiling / floating windows
+bindsym $mod+space focus mode_toggle
+# focus the parent container
+bindsym $mod+a focus parent
+# focus the child container
+#bindsym $mod+d focus child
+# switch to workspace
+bindsym $mod+1 workspace $ws1
+bindsym $mod+2 workspace $ws2
+bindsym $mod+3 workspace $ws3
+bindsym $mod+4 workspace $ws4
+bindsym $mod+5 workspace $ws5
+bindsym $mod+6 workspace $ws6
+bindsym $mod+7 workspace $ws7
+bindsym $mod+8 workspace $ws8
+bindsym $mod+9 workspace $ws9
+bindsym $mod+0 workspace $ws10
+# move focused container to workspace
+bindsym $mod+Shift+1 move container to workspace $ws1
+bindsym $mod+Shift+2 move container to workspace $ws2
+bindsym $mod+Shift+3 move container to workspace $ws3
+bindsym $mod+Shift+4 move container to workspace $ws4
+bindsym $mod+Shift+5 move container to workspace $ws5
+bindsym $mod+Shift+6 move container to workspace $ws6
+bindsym $mod+Shift+7 move container to workspace $ws7
+bindsym $mod+Shift+8 move container to workspace $ws8
+bindsym $mod+Shift+9 move container to workspace $ws9
+bindsym $mod+Shift+0 move container to workspace $ws10
+#scratchpad: hidden floating workspace, useful for limited time, many times
+bindsym $mod+z scratchpad show
+bindsym $mod+Shift+z move scratchpad
+# cycle through worskspaces
+bindsym $mod+Tab workspace next
+# close every window on every workspace
+bindsym $mod+Mod1+q [class=".*"] kill
+
+# APPLICATIONS SHORTCUTS
+
+# start a terminal. Open in directory of currently focussed process.
+bindsym $mod+Return exec termite -d "`xcwd`"
+# start rofi (dmenu alternative)
+bindsym $mod+d exec "~/.config/i3/myrofi.sh"
+# open chrome
+bindsym $mod+c exec chromium
+# and open chrome in youtube mode
+bindsym $mod+y exec "chromium --app=https://youtube.com/"
+# open spotify using mod+play
+bindsym $mod+XF86AudioPlay exec spotify
+# open ranger (file mamager)
+bindsym $mod+r exec termite -e ranger "`xcwd`"
+# take a screenshot using the import command from imagemagick and xclip to copy to clipboard
+bindsym --release $mod+p exec "import ~/pictures/i3screenshot.png && xclip -selection clipboard -target image/png ~/pictures/i3screenshot.png"
+
+# $mod+Shift+p is take by keepass!
+
+# SYSTEM SHORTCUTS
+
+# reload the configuration file
+bindsym $mod+Shift+c reload
+# restart i3 inplace (preserves your layout/session, can be used to upgrade i3)
+bindsym $mod+Shift+r restart
+# set lock screen command using the image lock_bg (has to be .png to work with i3lock) as a lockscreen wallpaper
+set $Locker i3lock -i ~/.config/i3/lock_bg.png && sleep 1
+# set message shown when entering mode_system
+set $mode_system Sistema: (b) blocca, (t) termina sessione, (i) iberna, (r) riavvia, (s) spegni.
+# mode_system
+bindsym $mod+Escape mode "$mode_system"
+mode "$mode_system" {
+    bindsym b exec --no-startup-id $Locker, mode "default"
+    bindsym t exec --no-startup-id i3-msg exit, mode "default"
+    bindsym i exec --no-startup-id $Locker && systemctl hibernate, mode "default"
+    bindsym r exec --no-startup-id systemctl reboot, mode "default"
+    bindsym s exec --no-startup-id shutdown now, mode "default"  
+    # back to normal: Enter or Escape
+    bindsym Return mode "default"
+    bindsym Escape mode "default"
+}
+# Keyboard layout using mod+u/i
+#bindsym $mod+u "exec setxkbmap -layout us"
+#bindsym $mod+i "exec setxkbmap -layout it"
+# Pulse Audio controls
+bindsym XF86AudioRaiseVolume exec --no-startup-id pactl set-sink-volume 0 +5%
+bindsym XF86AudioLowerVolume exec --no-startup-id pactl set-sink-volume 0 -5%
+bindsym XF86AudioMute exec --no-startup-id pactl set-sink-mute 0 toggle
+# Multimedia controls
+bindsym XF86AudioPlay exec playerctl play-pause
+bindsym XF86AudioNext exec playerctl next
+bindsym XF86AudioPrev exec playerctl previous
+bindsym XF86MonBrightnessDown exec "light -U 5; notify-send 'brightness down'"
+bindsym XF86MonBrightnessUp exec "light -A 5; notify-send 'brightness up'"
+# remember that $mod+n is used by dunst to close all notifications!
+
+
+# ################ #
+# STARTUP COMMANDS #
+# ################ #
+
+# network manager applet
+exec --no-startup-id nm-applet
+# initialize volume
+exec --no-startup-id amixer -q set Master 70
+# pulseaudio
+exec --no-startup-id start-pulseaudio-x11
+# bluetooth
+exec --no-startup-id blueman-applet
+# notification manager
+exec --no-startup-id dunst -conf .config/dunst/dunstr/
+# composite manager for transparency and other improvements
+exec --no-startup-id compton --config .config/compton.conf -b
+# restore nitrogen to set the desktop wallpaper (the first time you have to run nitrogen to set your wallpaper)
+exec --no-startup-id nitrogen --restore
+# set as default the us keyboard layout
+exec --no-startup-id setxkbmap -layout us
+# unclutter (auto-hide cursor)
+exec --no-startup-id unclutter
+# battery warning script
+exec --no-startup-id ~/.config/i3/i3-battery-popup -L 15 -n
+# ibus
+exec --no-startup-id ibus-daemon
+# refresh system time if it was fucked up
+exec --no-startup-id timedatectl
+
+# open some applications at startup
+exec --no-startup-id i3-msg 'exec chromium; exec franz; exec rescuetime; exec keepassxc'
+
+# open applications that need delayed startup
+exec --no-startup-id ~/.config/i3/delayed_startup.sh
+
+
+# temporary stuff
+for_window [title="^Gibberify$"] floating toggle

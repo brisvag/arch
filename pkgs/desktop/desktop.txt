@@ -1,0 +1,39 @@
+# needs
+brisvag-base
+
+# provides
+
+# xorg group
+xf86-video-vesa xorg-bdftopcf xorg-docs xorg-font-util xorg-fonts-100dpi
+xorg-fonts-75dpi xorg-fonts-encodings xorg-iceauth xorg-luit xorg-mkfontscale
+xorg-server xorg-server-common xorg-server-devel
+xorg-server-xdmx xorg-server-xephyr xorg-server-xnest xorg-server-xvfb
+xorg-server-xwayland xorg-sessreg xorg-setxkbmap xorg-smproxy xorg-x11perf
+xorg-xauth xorg-xbacklight xorg-xcmsdb xorg-xcursorgen
+xorg-xdpyinfo xorg-xdriinfo xorg-xev xorg-xgamma xorg-xhost xorg-xinput
+xorg-xkbcomp xorg-xkbevd xorg-xkbutils xorg-xkill xorg-xlsatoms
+xorg-xlsclients xorg-xmodmap xorg-xpr xorg-xprop
+xorg-xrandr xorg-xrdb xorg-xrefresh xorg-xset xorg-xsetroot xorg-xvinfo
+xorg-xwd xorg-xwininfo xorg-xwud
+
+
+# i3wm, desktop environment
+lightdm lightdm-gtk-greeter
+i3-gaps i3blocks i3lock
+ttf-font-awesome-4 ttf-inconsolata
+imagemagick blueman dunst compton nitrogen playerctl
+unclutter ibus rescuetime2 optimus-manager-qt-git rofi
+network-manager-applet pavucontrol syncthing keepassxc
+
+# important apps
+termite
+chromium pepper-flash chromium-widevine firefox
+spotify spotblock-git vlc
+imv mupdf
+pycharm-professional
+filelight
+gimp
+
+# fonts
+ttf-arphic-uming ttf-baekmuk ttf-dejavu ttf-liberation ttf-linux-libertine
+fake-ms-fonts font-mathematica
