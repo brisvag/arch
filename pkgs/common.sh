@@ -44,7 +44,7 @@ package() {
   # package root files
   root="${rootdir}/root"
   if [[ -d "${root}" ]]; then
-    tree=$(realpath --relative-to="${root}" $(find "${root}" -mindepth 1 -type d))
+    tree=$(find "${root}" -mindepth 1 -type d | xargs -r -n 1 realpath --relative-to="${root}")
     for dir in ${tree}; do
       mkdir -p "${pkgdir}/${dir}"
     done
