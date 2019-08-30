@@ -102,7 +102,7 @@ destroy () {ps ax|grep $1|awk '{print $1}' | xargs -L 1 -I X kill X}
 alias stir="python -m stir"
 alias gibberify="python -m gibberify"
 gam () {git add "$1" && git commit -m "$2"} # need quotes on the message
-alias wth='curl -s "v2.wttr.in"'
+alias weather='curl -s "v2.wttr.in"'
 
 # Share history between open terminals
 setopt inc_append_history
