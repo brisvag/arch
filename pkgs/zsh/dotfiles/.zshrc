@@ -101,9 +101,7 @@ alias dact='conda deactivate'
 destroy () {ps ax|grep $1|awk '{print $1}' | xargs -L 1 -I X kill X}
 alias stir="python -m stir"
 alias gibberify="python -m gibberify"
-
-# thefuck
-eval $(thefuck --alias)
+gam () {git add "$1" && git commit -m "$2"} # need quotes on the message
 
 # Share history between open terminals
 setopt inc_append_history
