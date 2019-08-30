@@ -2,13 +2,3 @@ name='core'
 pkgdesc='provides hooks and utilities needed to handle and install all the other metapackages'
 
 source ../common.sh
-
-# this one is a special one, cause it sets up configuration and hooks for other packages,
-# so need to overwrite things manually!
-
-package() {
-    mkdir -p "${pkgdir}/etc/pacman.d/hooks"
-    mkdir -p "${pkgdir}/etc/pacman.d/hooks.bin"
-    cp -a "${rootdir}/root/"* "${pkgdir}/"
-  return 0
-}

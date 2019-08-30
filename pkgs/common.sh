@@ -34,10 +34,21 @@ fi
 
 package() {
   # package dotfiles
-  if [[ -d "${rootdir}"/dotfiles ]]; then
+  dotfiles="${rootdir}/dotfiles"
+  if [[ -d "${dotfiles}" ]]; then
     local home=$(eval echo "${home}")
     mkdir -p "${home}"
-    cp -a "${rootdir}"/dotfiles "${home}"
+    cp -a "${dotfiles}" "${home}"
+  fi
+
+  # package root files
+  root="${rootdir}/root"
+  if [[ -d "${root}" ]]; then
+    tree=$(realpath --relative-to="${root}" $(find "${root}" -mindepth 1 -type d))
+    for dir in ${tree}; do
+      mkdir -p "${pkgdir}/${dir}"
+    done
+    cp -a "${root}/"* "${pkgdir}/"
   fi
   return 0
 }
