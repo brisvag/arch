@@ -1,6 +1,7 @@
-# my stuff
-brisvag-hooks
+# needs
 brisvag-core
+
+# provides
 brisvag-utils
 brisvag-zsh
 brisvag-vim
