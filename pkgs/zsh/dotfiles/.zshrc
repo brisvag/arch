@@ -103,6 +103,7 @@ alias stir="python -m stir"
 alias gibberify="python -m gibberify"
 gam () {git add "$1" && git commit -m "$2"} # need quotes on the message
 alias weather='curl -s "v2.wttr.in"'
+unalias grv
 
 # Share history between open terminals
 setopt inc_append_history
