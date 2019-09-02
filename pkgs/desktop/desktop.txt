@@ -33,6 +33,7 @@ imv mupdf
 pycharm-professional
 filelight
 gimp
+rtv
 
 # fonts
 ttf-arphic-uming ttf-baekmuk ttf-dejavu ttf-liberation ttf-linux-libertine
