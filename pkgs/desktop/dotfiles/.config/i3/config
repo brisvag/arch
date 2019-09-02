@@ -138,9 +138,9 @@ bindsym $mod+v split v
 # enter fullscreen mode for the focused container
 bindsym $mod+f fullscreen toggle
 # change container layout (stacked, tabbed, toggle split)
-bindsym $mod+s layout stacking
-bindsym $mod+w layout tabbed
-bindsym $mod+e layout toggle split
+#bindsym $mod+s layout stacking
+#bindsym $mod+w layout tabbed
+#bindsym $mod+e layout toggle split
 # toggle tiling / floating
 bindsym $mod+Shift+space floating toggle
 # toggle sticky window
@@ -148,7 +148,7 @@ bindsym $mod+o sticky toggle
 # change focus between tiling / floating windows
 bindsym $mod+space focus mode_toggle
 # focus the parent container
-bindsym $mod+a focus parent
+#bindsym $mod+a focus parent
 # focus the child container
 #bindsym $mod+d focus child
 # switch to workspace
@@ -195,6 +195,8 @@ bindsym $mod+y exec "chromium --app=https://youtube.com/"
 bindsym $mod+XF86AudioPlay exec spotify
 # open ranger (file mamager)
 bindsym $mod+r exec termite -e ranger "`xcwd`"
+# open vim
+bindsym $mod+w exec termite -e vim
 # take a screenshot using the import command from imagemagick and xclip to copy to clipboard
 bindsym --release $mod+p exec "import ~/pictures/i3screenshot.png && xclip -selection clipboard -target image/png ~/pictures/i3screenshot.png"
 
@@ -263,7 +265,7 @@ exec --no-startup-id unclutter
 # battery warning script
 exec --no-startup-id ~/.config/i3/i3-battery-popup -L 15 -n
 # ibus
-exec --no-startup-id ibus-daemon
+exec_always --no-startup-id ibus-daemon -xdr
 # refresh system time if it was fucked up
 exec --no-startup-id timedatectl
 

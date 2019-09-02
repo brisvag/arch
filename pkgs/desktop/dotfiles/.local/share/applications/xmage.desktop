@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Encoding=UTF-8
+Name=XMage Launcher
+Comment=MTG open-source free platform
+Exec=bash -c 'java -Xmx2G -jar /home/brisvag/Xmage/XMageLauncher-*.jar'
+Terminal=false
