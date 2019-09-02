@@ -1,0 +1,4 @@
+name='games'
+pkgdesc='games-related packages and configurations'
+
+source ../common.sh

@@ -1,0 +1,8 @@
+# needs
+brisvag-core
+
+# provides
+wine winetricks
+steam
+playonlinux
+lutris
