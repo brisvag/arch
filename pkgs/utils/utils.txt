@@ -24,3 +24,5 @@ gparted
 rsync
 screen
 git
+grv
+up
