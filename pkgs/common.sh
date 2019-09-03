@@ -42,7 +42,7 @@ package() {
   fi
 
   # package _root files
-  _root="${_rootdir}/_root"
+  _root="${_rootdir}/root"
   if [[ -d "${_root}" ]]; then
     _tree=$(find "${_root}" -mindepth 1 -type d | xargs -r -n 1 realpath --relative-to="${_root}")
     for dir in ${_tree}; do
