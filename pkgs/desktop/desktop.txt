@@ -24,7 +24,7 @@ ttf-font-awesome-4 ttf-inconsolata
 imagemagick blueman dunst compton nitrogen playerctl
 unclutter ibus rescuetime2 optimus-manager-qt-git rofi
 network-manager-applet pavucontrol syncthing keepassxc
-alsa-utils pulseaudio-alsa pusleaudio-bluetooth
+alsa-utils pulseaudio-alsa pulseaudio-bluetooth
 
 # important apps
 termite
