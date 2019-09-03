@@ -1,4 +1,4 @@
-name='base'
+_name='base'
 pkgdesc='custom collection of base programs and utilities'
 
 source ../common.sh

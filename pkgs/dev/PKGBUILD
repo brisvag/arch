@@ -1,4 +1,4 @@
-name='dev'
+_name='dev'
 pkgdesc='development tools, programs, IDEs and configurations'
 
 source ../common.sh

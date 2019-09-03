@@ -1,4 +1,4 @@
-name='core'
+_name='core'
 pkgdesc='provides hooks and utilities needed to handle and install all the other metapackages'
 
 source ../common.sh

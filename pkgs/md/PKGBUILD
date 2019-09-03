@@ -1,4 +1,4 @@
-name='md'
+_name='md'
 pkgdesc='all things molecular dynamics and protein modeling'
 
 source ../common.sh
