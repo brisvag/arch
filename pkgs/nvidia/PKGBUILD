@@ -1,0 +1,4 @@
+name='nvidia'
+pkgdesc='configurations and packages needed to make nvidia GPUs work'
+
+source ../common.sh
