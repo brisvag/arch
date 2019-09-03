@@ -1,2 +1,0 @@
-#!/bin/bash
-pacman -U /var/cache/pacman/pkg/nvidia-settings-415.25-1-x86_64.pkg.tar.xz /var/cache/pacman/pkg/nvidia-utils-415.25-1-x86_64.pkg.tar.xz /var/cache/pacman/pkg/nvidia-dkms-415.25-8-x86_64.pkg.tar.xz /var/cache/pacman/pkg/opencl-nvidia-415.25-1-x86_64.pkg.tar.xz /var/cache/pacman/pkg/lib32-nvidia-utils-415.25-1-x86_64.pkg.tar.xz /var/cache/pacman/pkg/lib32-opencl-nvidia-415.25-1-x86_64.pkg.tar.xz
