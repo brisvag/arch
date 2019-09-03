@@ -24,17 +24,18 @@ ttf-font-awesome-4 ttf-inconsolata
 imagemagick blueman dunst compton nitrogen playerctl
 unclutter ibus rescuetime2 optimus-manager-qt-git rofi
 network-manager-applet pavucontrol syncthing keepassxc
+alsa-utils pulseaudio-alsa pusleaudio-bluetooth
 
 # important apps
 termite
 chromium pepper-flash chromium-widevine firefox
 spotify spotblock-git vlc
 imv mupdf
-pycharm-professional
 filelight
 gimp
+deluge
 rtv
 
 # fonts
 ttf-arphic-uming ttf-baekmuk ttf-dejavu ttf-liberation ttf-linux-libertine
-fake-ms-fonts font-mathematica
+fake-ms-fonts font-mathematica noto-fonts-emoji gnu-free-fonts
