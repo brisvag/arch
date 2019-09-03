@@ -31,6 +31,7 @@ done
 
 # get list of dotfiles owned by the installed packages
 files=$(find $(pacman -Ql ${pkgs} | awk '{print $2}') -maxdepth 0 -type f | \
+       grep -e "^${dotfiles}" | \
        xargs -r -n 1 realpath --relative-to="${dotfiles}")
 # backup files if needed, and make necessary links
 for file in ${files}; do
