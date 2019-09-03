@@ -1,0 +1,4 @@
+name='scripts'
+pkgdesc='curated collection of scripts and tools'
+
+source ../common.sh

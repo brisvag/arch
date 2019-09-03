@@ -1,0 +1,4 @@
+# needs
+brisvag-core
+
+# provides
