@@ -1,0 +1,4 @@
+name='md'
+pkgdesc='all things molecular dynamics and protein modeling'
+
+source ../common.sh

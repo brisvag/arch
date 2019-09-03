@@ -1,0 +1,7 @@
+# needs
+brisvag-core
+
+# provides
+gromacs
+openbabel
+gnuplot
