@@ -34,7 +34,7 @@ fi
 
 package() {
   # package _dotfiles
-  _dotfiles="${_rootdir}/_dotfiles"
+  _dotfiles="${_rootdir}/dotfiles"
   if [[ -d "${_dotfiles}" ]]; then
     local _home=$(eval echo "${_home}")
     mkdir -p "${_home}"
