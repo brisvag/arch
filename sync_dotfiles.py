@@ -23,3 +23,10 @@ for pkg in pkgs_dir.iterdir():
             homefile = f'/home/{user}' / relpath
             if homefile.is_file():
                 subprocess.run(f'cp {homefile} {relpath}', cwd=dotfiles, shell=True)
+    rootfiles = pkg / 'root'
+    if rootfiles.is_dir():
+        for file in rootfiles.rglob('**/*'):
+            relpath = file.relative_to(rootfiles)
+            systemfile = '/' / relpath
+            if systemfile.is_file():
+                subprocess.run(f'cp {systemfile} {relpath}', cwd=rootfiles, shell=True)
