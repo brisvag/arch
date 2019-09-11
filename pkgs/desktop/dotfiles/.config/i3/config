@@ -193,6 +193,7 @@ bindsym $mod+w exec termite -e vim
 # take a screenshot using the import command from imagemagick and xclip to copy to clipboard
 bindsym --release $mod+p exec "import ~/pictures/i3screenshot.png && xclip -selection clipboard -target image/png ~/pictures/i3screenshot.png"
 
+
 # $mod+Shift+p is take by keepass!
 
 # SYSTEM SHORTCUTS
@@ -263,11 +264,10 @@ exec_always --no-startup-id ibus-daemon -xdr
 exec --no-startup-id timedatectl
 
 # open some applications at startup
-exec --no-startup-id i3-msg 'exec chromium; exec franz; exec rescuetime; exec keepassxc'
+exec --no-startup-id i3-msg 'exec chromium; exec rescuetime; exec franz'
 
 # open applications that need delayed startup
 exec --no-startup-id ~/.config/i3/delayed_startup.sh
-
 
 # temporary stuff
 for_window [title="^Gibberify$"] floating toggle

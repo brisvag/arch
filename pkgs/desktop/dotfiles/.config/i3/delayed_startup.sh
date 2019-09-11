@@ -1,5 +1,4 @@
 #!/bin/bash
 
-sleep 1
+sleep 2
 optimus-manager-qt
-
