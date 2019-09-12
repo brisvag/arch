@@ -108,6 +108,7 @@ Plug 'xolox/vim-misc'
 Plug 'xolox/vim-notes'
 Plug 'rhysd/vim-grammarous'
 Plug 'wakatime/vim-wakatime'
+Plug 'kkoomen/vim-doge'
 call plug#end()
 
 " YouCompleteMe settings
