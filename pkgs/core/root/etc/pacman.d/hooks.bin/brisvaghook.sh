@@ -26,6 +26,8 @@ for dir in ${directories}; do
     continue
   else
     mkdir -p "${dir}"
+    # give ownership to user
+    chown -h ${user}:users "${dir}"
   fi
 done
 
