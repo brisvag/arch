@@ -74,7 +74,7 @@
     # The transparency of the window.  Range: [0; 100].
     # This option will only work if a compositing windowmanager is
     # present (e.g. xcompmgr, compiz, etc.).
-    transparency = 15
+    transparency = 5
     
     # Don't remove messages, if the user is idle (no mouse or keyboard input)
     # for longer than idle_threshold seconds.
@@ -227,7 +227,7 @@
 # INDIVIDUAL APP SETTINGS
 
 [franz]
-    appname = franz
+    appname = Franz
     new_icon = franz
 
 # Every section that isn't one of the above is interpreted as a rules to
