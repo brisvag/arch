@@ -25,6 +25,7 @@ imagemagick blueman dunst compton nitrogen playerctl
 unclutter ibus rescuetime2 optimus-manager-qt-git rofi
 network-manager-applet pavucontrol syncthing keepassxc
 alsa-utils pulseaudio-alsa pulseaudio-bluetooth
+lxqt-policykit
 
 # important apps
 termite

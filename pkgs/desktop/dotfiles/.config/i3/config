@@ -238,6 +238,8 @@ bindsym XF86MonBrightnessUp exec "light -A 5; notify-send 'brightness up'"
 # STARTUP COMMANDS #
 # ################ #
 
+# policykit agent
+exec --no-startup-id /usr/bin/lxqt-policykit-agent
 # network manager applet
 exec --no-startup-id nm-applet
 # initialize volume
