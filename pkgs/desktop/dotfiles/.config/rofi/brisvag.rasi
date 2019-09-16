@@ -1,0 +1,116 @@
+configuration {
+	show-icons:			true;
+	modi:				[ run, drun ];
+	matching:			"regex";
+	terminal:			"termite";
+	threads:			0;
+}
+* {
+	active-bg-color:		#39393999;
+	active-text-color:		#FFFFFFCC;
+	active-border-color:	#BEBEBE99;
+	inactive-bg-color:		#1F1F1F99;
+	inactive-text-color:	#929292CC;
+	urgent-bg-color:		#90000099;
+	urgent-text-color:		#FFFFFFFF;
+}
+window {
+	background-color:	@inactive-bg-color;
+	border-color:		@active-border-color;
+	text-color:			@inactive-text-color;
+	border:				1px;
+	padding:			5px;
+	border-radius:		1px;
+	font:				"Inconsolata 18";
+	transparency:		"real";
+	location:			"center";
+	anchor:				"center";
+	width:				40%;
+	height:				40%;
+}
+	mainbox {
+		background-color:	inherit;
+		border-color:		inherit;
+		text-color:			inherit;
+	}
+		inputbar {
+			background-color:	inherit;
+			border-color:		inherit;
+			text-color:			@active-text-color;
+			padding:			5px;
+		}
+			prompt {
+				background-color:	inherit;
+				border-color:		inherit;
+				text-color:			inherit;
+				padding:			inherit;
+			}
+			entry {
+				background-color:	inherit;
+				border-color:		inherit;
+				text-color:			inherit;
+				padding:			inherit;
+			}
+			case-indicator {
+				background-color:	inherit;
+				border-color:		inherit;
+				text-color:			inherit;
+				padding:			inherit;
+			}
+		message {
+			background-color:	@urgent-bg-color;
+			border-color:		inherit;
+			text-color:			@urgent-text-color;
+		}
+		listview {
+			background-color:	inherit;
+			border-color:		inherit;
+			text-color:			inherit;
+			cycle:				true;
+			scrollbar:			false;
+			spacing:			5;
+			padding:			4px;
+		}
+			element {
+				background-color:	inherit;
+				border-color:		inherit;
+				text-color:			inherit;
+				padding:			1px;
+				expand:				true;
+				vertical-align:		1;
+				highlight:			bold underline;
+			}
+				element.normal.normal {
+					background-color:	inherit;
+					border-color:		inherit;
+					text-color:			inherit;
+				}
+					element.normal.active {
+						background-color:	@active-bg-color;
+						border-color:		inherit;
+						text-color:			@active-text-color;
+					}
+					element.normal.urgent {
+						background-color:	@urgent-bg-color;
+						border-color:		inherit;
+						text-color:			@urgent-text-color;
+					}
+				element.selected.normal {
+					background-color:	@active-bg-color;
+					border-color:		inherit;
+					text-color:			@active-text-color;
+					border:				1px;
+				}
+					element.selected.active {
+						background-color:	@active-bg-color;
+						border-color:		inherit;
+						text-color:			@active-text-color;
+						border:				1px;
+					}
+					element.selected.urgent {
+						background-color:	@urgent-bg-color;
+						border-color:		inherit;
+						text-color:			@urgent-text-color;
+						border:				1px;
+					}
+

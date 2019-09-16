@@ -179,7 +179,7 @@ bindsym $mod+Mod1+q [class=".*"] kill
 # start a terminal. Open in directory of currently focussed process.
 bindsym $mod+Return exec termite -d "`xcwd`"
 # start rofi (dmenu alternative)
-bindsym $mod+d exec "~/.config/i3/myrofi.sh"
+bindsym $mod+d exec "rofi -show drun -theme ~/.config/rofi/brisvag.rasi"
 # open chrome
 bindsym $mod+c exec chromium
 # and open chrome in youtube mode
