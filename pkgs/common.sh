@@ -14,7 +14,7 @@ _rootdir=${PWD}
 # however, only count commits of this file AFTER the package was first created
 version() {
   this="${_rootdir}/../common.sh"
-  _startdate=$(git log --follow --date=local --pretty=format:%ad --diff-filter=A "${_rootdir}")
+  _startdate=$(git log --follow --date=local --pretty=format:%ad --diff-filter=A "${_rootdir}" | tail -n 1)
   _ncommits=$(git shortlog -s --date=local --since="${_startdate}" "${_rootdir}" "${this}" | awk '{n += $1}; END{print n}')
   _lasthash=$(git log -n 1 --pretty=format:%h -- "${_rootdir}" "${this}")
   printf "r%s.%s" "${_ncommits}" "${_lasthash}"
