@@ -17,4 +17,4 @@ pacman patch pkgconf sed sudo systemd texinfo
 util-linux which
 
 # additional stuff
-git
+git     # needed for installation of other packages
