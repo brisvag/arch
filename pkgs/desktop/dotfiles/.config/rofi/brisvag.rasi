@@ -29,7 +29,7 @@ window {
 	height:				40%;
 }
 	mainbox {
-		background-color:	inherit;
+		background-color:	transparent;
 		border-color:		inherit;
 		text-color:			inherit;
 	}
@@ -68,8 +68,8 @@ window {
 			text-color:			inherit;
 			cycle:				true;
 			scrollbar:			false;
-			spacing:			5;
-			padding:			4px;
+			padding:			2px;
+			fixed-height:		true;
 		}
 			element {
 				background-color:	inherit;
@@ -77,8 +77,9 @@ window {
 				text-color:			inherit;
 				padding:			1px;
 				expand:				true;
-				vertical-align:		1;
+				vertical-align:		0;
 				highlight:			bold underline;
+				padding:			5;
 			}
 				element.normal.normal {
 					background-color:	inherit;
