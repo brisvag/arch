@@ -6,12 +6,12 @@ configuration {
 	threads:			0;
 }
 * {
-	active-bg-color:		#39393999;
-	active-text-color:		#FFFFFFCC;
-	active-border-color:	#BEBEBE99;
-	inactive-bg-color:		#1F1F1F99;
-	inactive-text-color:	#929292CC;
-	urgent-bg-color:		#90000099;
+	active-bg-color:		#393939EE;
+	active-text-color:		#FFFFFFEE;
+	active-border-color:	#BEBEBEEE;
+	inactive-bg-color:		#1F1F1FEE;
+	inactive-text-color:	#929292EE;
+	urgent-bg-color:		#900000EE;
 	urgent-text-color:		#FFFFFFFF;
 }
 window {
