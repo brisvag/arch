@@ -16,5 +16,5 @@ gawk gcc gettext grep groff gzip libtool m4 make
 pacman patch pkgconf sed sudo systemd texinfo
 util-linux which
 
-# additional stuff
-git     # needed for installation of other packages
+# additional stuff needed for installation of other packages
+git
