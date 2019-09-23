@@ -35,7 +35,7 @@ imv mupdf
 filelight
 gimp
 deluge
-rtv
+tuir
 
 # fonts
 ttf-arphic-uming ttf-baekmuk ttf-dejavu ttf-liberation ttf-linux-libertine
