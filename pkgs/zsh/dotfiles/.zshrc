@@ -113,6 +113,9 @@ bindkey "^[[1~" beginning-of-line
 bindkey "^[[4~" end-of-line
 bindkey "^[[3~" delete-char
 
+# Fix termite ssh issue
+export TERM="termite"
+
 # base paths
 export PATH="$HOME/.local/bin:$PATH"
 
