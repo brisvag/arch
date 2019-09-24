@@ -117,7 +117,7 @@ let g:ycm_autoclose_preview_window_after_completion=1
 let g:ycm_server_python_interpreter = '/usr/bin/python3'
 
 " add shortcut for GoTo command with \g
-map <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
+noremap <leader>g  :YcmCompleter GoToDefinitionElseDeclaration<CR>
 
 " Snippets settings
 imap <Space><Space>     <Plug>(neosnippet_expand_or_jump)
@@ -170,6 +170,9 @@ let g:pymode_syntax_all = 1
 
 :let g:notes_directories = ['~/notes', '~/DnD/notes']
 :let g:notes_suffix = '.txt'
+:let g:notes_tab_indents = 0
+:let g:notes_new_note_template = '/home/brisvag/.vim/custom/new_note_template.txt'
+
 
 " SETTINGS FOR GRAMMAROUS
 " activates C-n, C-p, C-f, C-r to move and fix errors while in check and

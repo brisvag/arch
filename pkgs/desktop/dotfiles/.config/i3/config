@@ -190,6 +190,8 @@ bindsym $mod+XF86AudioPlay exec spotify
 bindsym $mod+r exec termite -e ranger "`xcwd`"
 # open vim
 bindsym $mod+w exec termite -e vim
+# open vim in notes mode
+bindsym $mod+n exec termite -e "vim note:"
 # take a screenshot using the import command from imagemagick and xclip to copy to clipboard
 bindsym --release $mod+p exec "import ~/pictures/i3screenshot.png && xclip -selection clipboard -target image/png ~/pictures/i3screenshot.png"
 
