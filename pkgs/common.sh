@@ -19,6 +19,7 @@ version() {
   _lasthash=$(git log -n 1 --pretty=format:%h -- "${_rootdir}" "${this}")
   printf "r%s.%s" "${_ncommits}" "${_lasthash}"
 }
+# must call version() function despite it being called by default because of $rootdir causing issues
 pkgver=$(version)
 pkgrel=1
 
@@ -33,7 +34,7 @@ if [[ -f "${_name}.install" ]]; then
 fi
 
 package() {
-  # package _dotfiles
+  # package dotfiles
   _dotfiles="${_rootdir}/dotfiles"
   if [[ -d "${_dotfiles}" ]]; then
     local _home=$(eval echo "${_home}")
@@ -41,7 +42,7 @@ package() {
     cp -a "${_dotfiles}" "${_home}"
   fi
 
-  # package _root files
+  # package root files
   _root="${_rootdir}/root"
   if [[ -d "${_root}" ]]; then
     _tree=$(find "${_root}" -mindepth 1 -type d | xargs -r -n 1 realpath --relative-to="${_root}")
