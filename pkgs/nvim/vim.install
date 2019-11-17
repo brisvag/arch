@@ -7,7 +7,7 @@ post_install() {
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     # change ownership of files
-    chown -Rh ${user}:users /home/${user}/.vim/
+    chown -Rh ${user}:users /home/${user}/.local/share/nvim/
 
     # will this work with wakatime??
     # need to run this as $user
