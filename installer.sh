@@ -58,100 +58,103 @@ password2=$(dialog --stdout --passwordbox "Enter admin password again" 0 0) || e
 clear
 [[ "$password" == "$password2" ]] || ( echo "Passwords did not match"; exit 1; )
 
-format_disk=$(dialog --stdout --no-tags --menu "Do you want to wipe and format a disk?" 0 0 0 \
-              0 "Yes, I'll choose a disk to be completely wiped." \
-              1 "No, format a whole partition. It will be divided in all the necessary partitions." \
-              2 "No, I have partitions ready. (You will be prompted to choose which one is which)") || exit 1
-clear
-
-case ${format_disk} in
-  # yes. Disk will be wiped, formatted and linux installed
-  0)
-    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop|rom" | \
-                 awk '{print $1"\t"$2}' | tac)
-    device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
-    clear
-    makehome=$(dialog --stdout --yesno "Do you want to create a home partition?" 0 0)
-    clear
-    makeswap=$(dialog --stdout --yesno "Do you want to create a swap partition?" 0 0)
-    clear
-    ;;
-  # no. Choose one partition to be wiped
-  1)
-    devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
-                 awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
-    device=$(dialog --stdout --menu "Select installation partition" 0 0 0 ${devicelist}) || exit 1
-    clear
-    makehome=$(dialog --stdout --yesno "Do you want to create a home partition?" 0 0)
-    clear
-    makeswap=$(dialog --stdout --yesno "Do you want to create a swap partition?" 0 0)
-    clear
-    ;;
-  # no. Choose partitions one by one.
-  2)
-    devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
-                 awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
-    rootpart=$(dialog --stdout --menu "Select root partition" 0 0 0 ${devicelist}) || exit 1
-    clear
-    bootpart=$(dialog --stdout --menu "Select boot partition" 0 0 0 ${devicelist}) || exit 1
-    clear
-    homepart=$(dialog --stdout --menu "Select home partition, if you want it" 0 0 0 ${devicelist})
-    # if cancel is pressed, don't create a home partition
-    nohome=$?
-    [[ ${nohome} -eq 0 ]] || [[ ${nohome} -eq 1 ]] || exit 1
-    clear
-    swappart=$(dialog --stdout --menu "Select swap partition, if you want it" 0 0 0 ${devicelist})
-    # if cancel is pressed, don't create a swap partition
-    noswap=$?
-    [[ ${noswap} -eq 0 ]] || [[ ${noswap} -eq 1 ]] || exit 1
-    clear
-esac
-clear
-
-# if dryrun answer was yes (or KeyboardInterrupt), exit
-if [[ ${dryrun} == "Yes" ]]; then
-  exit 1
-fi
-
-#####################################################
-
-# start some decent logging, cause the real suff starts here
-exec 1> >(tee "stdout.log")
-exec 2> >(tee "stderr.log")
-
-boot_size=512
-swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
-root_size=20480
-
-case ${format_disk} in
-  # yes. Disk will be wiped, formatted and linux installed
-  0)
-    # create gpt table
-    gptcommand="mklabel gpt"
-    makebootcommand="mkpart EDP fat32 0% ${boot_size}MiB set 1 boot on"
-    if [[ ${makeswap} -eq 0 ]]; then
-      makeswapcommand="mkpart primary linux-swap ${boot_size}MiB ${swap_size}MiB"
-      root_start=$((${boot_size} + ${swap_size}))
-    else
-      root_start=${boot_size}
-    fi
-    if [[ ${makehome} -eq 0 ]]; then
-      root_end=$((${root_start} + ${root_size}))
-      makerootcommand="mkpart primary ext4 ${root_start}MiB ${root_end}MiB"
-      makehomecommand="mkpart primary ext4 ${root_end}MiB 100%"
-    else
-      makerootcommand="mkpart primary ext4 ${root_start}MiB 100%"
-    fi
-    ;;
-  1)
-    echo "nothing"
-esac
-
-parted --script ${device} -- gptcommand \
-${makebootcommand} \
-${makeswapcommand} \
-${makerootcommand} \
-${makehomecommand}
+#format_disk=$(dialog --stdout --no-tags --menu "Do you want to wipe and format a disk?" 0 0 0 \
+#              0 "Yes, I'll choose a disk to be completely wiped." \
+#              1 "No, format a whole partition. It will be divided in all the necessary partitions." \
+#              2 "No, I have partitions ready. (You will be prompted to choose which one is which)") || exit 1
+#clear
+#
+#case ${format_disk} in
+#  # yes. Disk will be wiped, formatted and linux installed
+#  0)
+#    devicelist=$(lsblk -dplnx size -o name,size | grep -Ev "boot|rpmb|loop|rom" | \
+#                 awk '{print $1"\t"$2}' | tac)
+#    device=$(dialog --stdout --menu "Select installation disk" 0 0 0 ${devicelist}) || exit 1
+#    clear
+#    makehome=$(dialog --stdout --yesno "Do you want to create a home partition?" 0 0)
+#    clear
+#    makeswap=$(dialog --stdout --yesno "Do you want to create a swap partition?" 0 0)
+#    clear
+#    ;;
+#  # no. Choose one partition to be wiped
+#  1)
+#    devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
+#                 awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
+#    device=$(dialog --stdout --menu "Select installation partition" 0 0 0 ${devicelist}) || exit 1
+#    clear
+#    makehome=$(dialog --stdout --yesno "Do you want to create a home partition?" 0 0)
+#    clear
+#    makeswap=$(dialog --stdout --yesno "Do you want to create a swap partition?" 0 0)
+#    clear
+#    ;;
+#  # no. Choose partitions one by one.
+#  2)
+#    devicelist=$(lsblk -plnx size -o name,size,mountpoint | grep -Ev "boot|rpmb|loop|rom" | \
+#                 awk '{if ($3=="") {$3="-"}; print $1"\t"$2"    "$3}' | tac)
+#    rootpart=$(dialog --stdout --menu "Select root partition" 0 0 0 ${devicelist}) || exit 1
+#    clear
+#    bootpart=$(dialog --stdout --menu "Select boot partition" 0 0 0 ${devicelist}) || exit 1
+#    clear
+#    homepart=$(dialog --stdout --menu "Select home partition, if you want it" 0 0 0 ${devicelist})
+#    # if cancel is pressed, don't create a home partition
+#    nohome=$?
+#    [[ ${nohome} -eq 0 ]] || [[ ${nohome} -eq 1 ]] || exit 1
+#    clear
+#    swappart=$(dialog --stdout --menu "Select swap partition, if you want it" 0 0 0 ${devicelist})
+#    # if cancel is pressed, don't create a swap partition
+#    noswap=$?
+#    [[ ${noswap} -eq 0 ]] || [[ ${noswap} -eq 1 ]] || exit 1
+#    clear
+#esac
+#clear
+#
+## if dryrun answer was yes (or KeyboardInterrupt), exit
+#if [[ ${dryrun} == "Yes" ]]; then
+#  exit 1
+#fi
+#
+######################################################
+#
+## start some decent logging, cause the real suff starts here
+#exec 1> >(tee "stdout.log")
+#exec 2> >(tee "stderr.log")
+#
+#boot_size=512
+#swap_size=$(free --mebi | awk '/Mem:/ {print $2}')
+#root_size=20480
+#
+#case ${format_disk} in
+#  # yes. Disk will be wiped, formatted and linux installed
+#  0)
+#    # create gpt table
+#    gptcommand="mklabel gpt"
+#    makebootcommand="mkpart EDP fat32 0% ${boot_size}MiB set 1 boot on"
+#    if [[ ${makeswap} -eq 0 ]]; then
+#      makeswapcommand="mkpart primary linux-swap ${boot_size}MiB ${swap_size}MiB"
+#      root_start=$((${boot_size} + ${swap_size}))
+#    else
+#      root_start=${boot_size}
+#    fi
+#    if [[ ${makehome} -eq 0 ]]; then
+#      root_end=$((${root_start} + ${root_size}))
+#      makerootcommand="mkpart primary ext4 ${root_start}MiB ${root_end}MiB"
+#      makehomecommand="mkpart primary ext4 ${root_end}MiB 100%"
+#    else
+#      makerootcommand="mkpart primary ext4 ${root_start}MiB 100%"
+#    fi
+#    ;;
+#  1)
+#    # no. One partition will be wiped and linux installed
+#    gptcommand=""
+#    makebootcommand="mkpart EDP fat32 0%"
+#    echo "nothing"
+#esac
+#
+#parted --script ${device} -- gptcommand \
+#${makebootcommand} \
+#${makeswapcommand} \
+#${makerootcommand} \
+#${makehomecommand}
 
 #    parted --script "${device}" -- mklabel gpt \
 #      mkpart ESP fat32 0 129MiB \
@@ -178,40 +181,40 @@ ${makehomecommand}
 #mkdir /mnt/boot
 #mount "${part_boot}" /mnt/boot
 
-#### Install and configure the basic system ###
-#cat >>/etc/pacman.conf <<EOF
-#[brisvag]
-#SigLevel = Optional TrustAll
-#Server = $REPO_URL
-#EOF
+### Install and configure the basic system ###
+cat >>/etc/pacman.conf <<EOF
+[brisvag]
+SigLevel = Optional TrustAll
+Server = $REPO_URL
+EOF
 
-#pacstrap /mnt brisvag-desktop
-#genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
-#echo "${hostname}" > /mnt/etc/hostname
+pacstrap /mnt brisvag-desktop
+genfstab -t PARTUUID /mnt >> /mnt/etc/fstab
+echo "${hostname}" > /mnt/etc/hostname
 
-#cat >>/mnt/etc/pacman.conf <<EOF
-#[brisvag]
-#SigLevel = Optional TrustAll
-#Server = $REPO_URL
-#EOF
+cat >>/mnt/etc/pacman.conf <<EOF
+[brisvag]
+SigLevel = Optional TrustAll
+Server = $REPO_URL
+EOF
 
-#arch-chroot /mnt bootctl install
+arch-chroot /mnt bootctl install
 
-#cat <<EOF > /mnt/boot/loader/loader.conf
-#default arch
-#EOF
+cat <<EOF > /mnt/boot/loader/loader.conf
+default arch
+EOF
 
-#cat <<EOF > /mnt/boot/loader/entries/arch.conf
-#title    Arch Linux
-#linux    /vmlinuz-linux
-#initrd   /initramfs-linux.img
-#options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
-#EOF
+cat <<EOF > /mnt/boot/loader/entries/arch.conf
+title    Arch Linux
+linux    /vmlinuz-linux
+initrd   /initramfs-linux.img
+options  root=PARTUUID=$(blkid -s PARTUUID -o value "$part_root") rw
+EOF
 
-#echo "LANG=en_GB.UTF-8" > /mnt/etc/locale.conf
+echo "LANG=en_GB.UTF-8" > /mnt/etc/locale.conf
 
-#arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel,uucp,video,audio,storage,games,input "$user"
-#arch-chroot /mnt chsh -s /usr/bin/zsh
+arch-chroot /mnt useradd -mU -s /usr/bin/zsh -G wheel,uucp,video,audio,storage,games,input "$user"
+arch-chroot /mnt chsh -s /usr/bin/zsh
 
-#echo "$user:$password" | chpasswd --root /mnt
-#echo "root:$password" | chpasswd --root /mnt
+echo "$user:$password" | chpasswd --root /mnt
+echo "root:$password" | chpasswd --root /mnt
