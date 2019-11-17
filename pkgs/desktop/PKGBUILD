@@ -1,4 +1,4 @@
 _name='desktop'
-pkgdesc='collection of everything I normally want in my desktop installation'
+pkgdesc='collection of everything I normally want in my desktop installation. INSTALL XORG FIRST'
 
 source ../common.sh
