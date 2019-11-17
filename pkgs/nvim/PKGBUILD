@@ -1,0 +1,4 @@
+_name='nvim'
+pkgdesc='neovim and everything related'
+
+source ../common.sh

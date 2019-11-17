@@ -3,7 +3,7 @@ post_install() {
   user="${SUDO_USER}"
   if [[ "${user}" != "" ]]; then
     # install vim-plug
-    curl -fLo /home/${user}/.vim/autoload/plug.vim --create-dirs \
+    curl -fLo /home/${user}/.local/share/nvim/site/autoload/plug.vim --create-dirs \
       https://raw.githubusercontent.com/junegunn/vim-plug/master/plug.vim
 
     # change ownership of files
@@ -11,6 +11,6 @@ post_install() {
 
     # will this work with wakatime??
     # need to run this as $user
-    sudo -Hu ${user} vim +PlugInstall +qall < /dev/tty > /dev/tty
+    sudo -Hu ${user} nvim +PlugInstall +qall < /dev/tty > /dev/tty
   fi
 }

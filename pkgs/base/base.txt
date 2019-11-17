@@ -4,4 +4,4 @@ brisvag-core
 # provides
 brisvag-utils
 brisvag-zsh
-brisvag-vim
+brisvag-nvim
