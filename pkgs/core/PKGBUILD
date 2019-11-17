@@ -1,4 +1,5 @@
 _name='core'
-pkgdesc='provides hooks and utilities needed to handle and install all the other metapackages'
+pkgdesc='provides hooks and utilities needed to handle and install all the other metapackages.
+         INSTALL BASE AND BASE-DEVEL FIRST'
 
 source ../common.sh
