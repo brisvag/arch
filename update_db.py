@@ -21,6 +21,8 @@ def parse_input():
                         help='list of packages to update. Use `all` to update everything')
     parser.add_argument('-r', '--remove', dest='remove', default=[], nargs='*',
                         help='list of packages to remove')
+    parser.add_argument('-d', '--nodeps', dest='nodeps', action='store_true',
+                        help='disable dependency checks')
     args = parser.parse_args()
     if len(sys.argv[1:]) == 0:
         parser.print_help()
@@ -41,16 +43,20 @@ def parse_input():
         if not dir.is_dir():
             raise FileNotFoundError(f'chosen package ({pkg}) does not exist')
 
-    return update, args.remove
+    return update, args.remove, args.nodeps
 
 
-def build_packages(update_list):
+def build_packages(update_list, nodeps):
     """
     rebuilds the requested packages and moves the tar files to the `repo` directory
     :param update_list: dictionary with packages to update
     """
+    if nodeps:
+        options = '-fcd'
+    else:
+        options = '-fc'
     for pkg, dir in update_list.items():
-        subprocess.run(['makepkg', '-fc'], cwd=dir)
+        subprocess.run(['makepkg', options], cwd=dir)
         # put the package in the repo directory
         for tar in dir.iterdir():
             if tar.match(f'{repo_name}-*.pkg.tar.xz'):
@@ -102,9 +108,9 @@ def rename_db(backwards=False):
 
 
 if __name__ == '__main__':
-    update_list, remove_list = parse_input()
+    update_list, remove_list, nodeps = parse_input()
     rename_db(backwards=True)
     delete_old_packages(update_list, remove_list)
-    build_packages(update_list)
+    build_packages(update_list, nodeps)
     update_db(update_list, remove_list)
     rename_db()
